@@ -1,0 +1,8 @@
+*.o
+*.swp
+*.save
+*.orig
+*.rej
+*.def*
+dwm
+*~
