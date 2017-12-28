@@ -112,7 +112,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-H", "/home/ruut/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]       = { "gnome-terminal", NULL };
+static const char *termcmd[]       = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *chromecmd[]     = { "chromium-browser", NULL };
 static const char *yandexcmd[]     = { "yandex-browser", NULL };
 static const char *audaciouscmd[]  = { "audacious", NULL };
