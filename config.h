@@ -114,6 +114,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-H", "/home/ruut/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]       = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *chromecmd[]     = { "chromium-browser", NULL };
+static const char *googlechromecmd[]     = { "google-chrome", NULL };
 static const char *yandexcmd[]     = { "yandex-browser", NULL };
 static const char *audaciouscmd[]  = { "audacious", NULL };
 static const char *sublimecmd[]    = { "sublime_text", NULL };
@@ -148,7 +149,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ ALT,                          XK_d,      spawn,          {.v = dmenucmd } },
 	{ ALT,                          XK_t,      spawn,          {.v = termcmd } },
-	{ ALT,                          XK_w,      spawn,          {.v = chromecmd } },
+	{ CTRL|ALT,                     XK_w,      spawn,          {.v = chromecmd } },
+	{ ALT,                          XK_w,      spawn,          {.v = googlechromecmd } },
 	{ ALT,                          XK_a,      spawn,          {.v = audaciouscmd } },
 	{ ALT|SHIFT,                    XK_x,      spawn,          {.v = atomcmd } },
 	{ ALT,		                    XK_x,      spawn,          {.v = vscodecmd } },
