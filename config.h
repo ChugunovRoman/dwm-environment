@@ -139,6 +139,18 @@ static const char *gsfcmd[]       = { "shutter", "-f", NULL };
 // static const char *gswccmd[]       = { "gnome-screenshot", "-w", "-c", NULL };
 static const char *gsfccmd[]       = { "gnome-screenshot", "-c", NULL };
 
+// Scripts
+static const char *toggleTouchpad[]  = { "bash", "/root/sh/toggleTouchPad.sh", NULL };
+
+// Change sound
+static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL };
+static const char *downVolume[]    = { "amixer", "-D", "pulse", "sset", "Master", "5%-", NULL };
+static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "sset", "Master", "toggle", NULL };
+
+static const char *toggleAudacious[]  = { "audacious", "-t", NULL };
+static const char *nextAudacious[]    = { "audacious", "-f", NULL };
+static const char *rewAudacious[]     = { "audacious", "-r", NULL };
+
 static const char *xkillcmd[]	   = { "xkill", NULL };
 static const char *shutdowncmd[]   = { "shutdown", "-h", "+0", NULL };
 static const char *rebootcmd[]	   = { "reboot", NULL };
@@ -178,6 +190,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,	   spawn,	       {.v = rebootcmd } },
 	{ MODKEY,                       XK_h,	   spawn,	       {.v = shutdowncmd } },
 	{ MODKEY,                       XK_x,	   spawn,	       {.v = xkillcmd } },
+
+	{ MODKEY,                       XK_F7,	   spawn,	       {.v = toggleTouchpad } },
+	{ MODKEY,                       XK_F1,	   spawn,	       {.v = toggleVolume } },
+	{ MODKEY,                       XK_F2,	   spawn,	       {.v = downVolume } },
+	{ MODKEY,                       XK_F3,	   spawn,	       {.v = upVolume } },
+
+	{ MODKEY,                       XK_F5,	   spawn,	       {.v = toggleAudacious } },
+	{ MODKEY,                       XK_F6,	   spawn,	       {.v = nextAudacious } },
+	{ MODKEY,                       XK_F4,	   spawn,	       {.v = rewAudacious } },
 
 	{ MODKEY,                       XK_l,	   spawn,	       {.v = slock } },
 
