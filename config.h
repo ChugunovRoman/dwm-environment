@@ -140,7 +140,7 @@ static const char *gsfcmd[]       = { "shutter", "-f", NULL };
 static const char *gsfccmd[]       = { "gnome-screenshot", "-c", NULL };
 
 // Scripts
-static const char *toggleTouchpad[]  = { "bash", "/root/sh/toggleTouchPad.sh", NULL };
+static const char *toggleTouchpad[]  = { "bash", "/home/ruut/sh/toggleTouchPad.sh", NULL };
 
 // Change sound
 static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL };
@@ -167,7 +167,7 @@ static Key keys[] = {
 	{ ALT|SHIFT,                    XK_x,      spawn,          {.v = atomcmd } },
 	{ ALT,		                    XK_x,      spawn,          {.v = vscodecmd } },
 	{ MODKEY|SHIFT,                 XK_x,      spawn,          {.v = sublimecmd } },
-	{ ALT,                          XK_f,	   spawn,	       {.v = firefoxcmd } },
+	// { ALT,                          XK_f,	   spawn,	       {.v = firefoxcmd } },
 	{ ALT,                          XK_y,	   spawn,	       {.v = yandexcmd } },
 	{ ALT,                          XK_e,	   spawn,	       {.v = pcmanfmcmd } },
 	{ ALT|SHIFT,                    XK_e,	   spawn,	       {.v = supcmanfmcmd } },
