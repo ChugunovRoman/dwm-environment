@@ -46,6 +46,7 @@ static const Rule rules[] = {
 	{ "Code",           NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Sublime_text",   NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Atom", 		    NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "QtCreator", 		NULL,       NULL,       1 << 1,       0,           -1 },
 
 	{ "Firefox",        NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "luakit",         NULL,       NULL,       1 << 2,       0,           -1 },
@@ -118,7 +119,7 @@ static const char *googlechromecmd[]     = { "google-chrome", NULL };
 static const char *yandexcmd[]     = { "yandex-browser", NULL };
 static const char *audaciouscmd[]  = { "audacious", NULL };
 static const char *sublimecmd[]    = { "sublime_text", NULL };
-static const char *vscodecmd[]     = { "code-insiders", NULL };
+static const char *vscodecmd[]     = { "code", NULL };
 static const char *atomcmd[]       = { "atom", NULL };
 static const char *firefoxcmd[]	   = { "firefox", NULL };
 static const char *pcmanfmcmd[]	   = { "pcmanfm-qt", NULL };
