@@ -56,7 +56,8 @@ static const Rule rules[] = {
 
 	{ "pcmanfm-qt",     NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Pcmanfm",        NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "Nautilus",        NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "Nautilus",       NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "nemo",           NULL,       NULL,       1 << 3,       0,           -1 },
 
 	{ "Audacious",      NULL,       NULL,       1 << 4,       0,           -1 },
 	{ "Audacity",       NULL,       NULL,       1 << 4,       0,           -1 },
