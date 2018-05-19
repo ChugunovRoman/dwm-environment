@@ -128,10 +128,12 @@ static const char *virtualboxcmd[] = { "virtualbox", NULL };
 static const char *suvirtualboxcmd[]= { "gksu", "virtualbox", NULL };
 static const char *photoshopcmd[]  = { "/usr/share/playonlinux/playonlinux", "--run", "'Adobe Photoshop CS6'", NULL };
 static const char *gimpcmd[]       = { "gimp", NULL };
+static const char *nemocmd[]       = { "nemo", "--no-desktop", NULL };
+static const char *nemosucmd[]     = { "gksu", "nemo", "--no-desktop", NULL };
 
 static const char *passcmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/3.txt", NULL };
 static const char *hostcmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/hosts.php", NULL };
-static const char *notescmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/notes.txt", NULL };
+static const char *notescmd[]      = { "gedit", "/media/ruut/MyDisk/Soft/Programming/notes.txt", NULL };
 
 static const char *gsacmd[]       = { "shutter", "-s", NULL };
 static const char *gswcmd[]       = { "shutter", "-w", NULL };
@@ -170,7 +172,9 @@ static Key keys[] = {
 	{ MODKEY|SHIFT,                 XK_x,      spawn,          {.v = sublimecmd } },
 	// { ALT,                          XK_f,	   spawn,	       {.v = firefoxcmd } },
 	{ ALT,                          XK_y,	   spawn,	       {.v = yandexcmd } },
-	{ ALT,                          XK_e,	   spawn,	       {.v = pcmanfmcmd } },
+	{ ALT,                          XK_e,	   spawn,	       {.v = nemocmd } },
+	{ ALT|SHIFT,                    XK_e,	   spawn,	       {.v = nemosucmd } },
+	{ ALT,                          XK_p,	   spawn,	       {.v = pcmanfmcmd } },
 	{ ALT|SHIFT,                    XK_e,	   spawn,	       {.v = supcmanfmcmd } },
 	{ ALT,                          XK_v,	   spawn,	       {.v = virtualboxcmd } },
 	{ ALT|SHIFT,                    XK_v,	   spawn,	       {.v = suvirtualboxcmd } },
