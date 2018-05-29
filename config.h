@@ -19,7 +19,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 24;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
+static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
@@ -208,7 +208,7 @@ static Key keys[] = {
 
 	{ MODKEY,                       XK_l,	   spawn,	       {.v = slock } },
 
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_space,  togglebar,      {0} },
 	{ MODKEY,                       XK_s,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_w,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
