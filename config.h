@@ -147,9 +147,12 @@ static const char *gsfccmd[]       = { "gnome-screenshot", "-c", NULL };
 static const char *toggleTouchpad[]  = { "bash", "/home/ruut/sh/toggleTouchPad.sh", NULL };
 
 // Change sound
-static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL };
-static const char *downVolume[]    = { "amixer", "-D", "pulse", "sset", "Master", "5%-", NULL };
-static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "sset", "Master", "toggle", NULL };
+static const char *upVolume[]      = { "amixer", "set", "Master", "5%+", NULL }; // for debian
+static const char *downVolume[]    = { "amixer", "set", "Master", "5%-", NULL }; // for debian
+static const char *toggleVolume[]  = { "amixer", "set", "Master", "toggle", NULL }; // for debian
+// static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL }; // for ubuntu
+// static const char *downVolume[]    = { "amixer", "-D", "pulse", "sset", "Master", "5%-", NULL }; // for ubuntu
+// static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "sset", "Master", "toggle", NULL }; // for ubuntu
 
 static const char *toggleAudacious[]  = { "audacious", "-t", NULL };
 static const char *nextAudacious[]    = { "audacious", "-f", NULL };
