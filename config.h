@@ -19,7 +19,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 24;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
+static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
 /* tagging */
@@ -46,6 +46,7 @@ static const Rule rules[] = {
 	{ "Code",           NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Sublime_text",   NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Atom", 		    NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "QtCreator", 		NULL,       NULL,       1 << 1,       0,           -1 },
 
 	{ "Firefox",        NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "luakit",         NULL,       NULL,       1 << 2,       0,           -1 },
@@ -55,7 +56,8 @@ static const Rule rules[] = {
 
 	{ "pcmanfm-qt",     NULL,       NULL,       1 << 3,       0,           -1 },
 	{ "Pcmanfm",        NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "Nautilus",        NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "Nautilus",       NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "nemo",           NULL,       NULL,       1 << 3,       0,           -1 },
 
 	{ "Audacious",      NULL,       NULL,       1 << 4,       0,           -1 },
 	{ "Audacity",       NULL,       NULL,       1 << 4,       0,           -1 },
@@ -114,10 +116,11 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-H", "/home/ruut/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]       = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *chromecmd[]     = { "chromium-browser", NULL };
+static const char *googlechromecmd[]     = { "google-chrome", NULL };
 static const char *yandexcmd[]     = { "yandex-browser", NULL };
 static const char *audaciouscmd[]  = { "audacious", NULL };
 static const char *sublimecmd[]    = { "sublime_text", NULL };
-static const char *vscodecmd[]     = { "code-insiders", NULL };
+static const char *vscodecmd[]     = { "code", NULL };
 static const char *atomcmd[]       = { "atom", NULL };
 static const char *firefoxcmd[]	   = { "firefox", NULL };
 static const char *pcmanfmcmd[]	   = { "pcmanfm-qt", NULL };
@@ -126,10 +129,12 @@ static const char *virtualboxcmd[] = { "virtualbox", NULL };
 static const char *suvirtualboxcmd[]= { "gksu", "virtualbox", NULL };
 static const char *photoshopcmd[]  = { "/usr/share/playonlinux/playonlinux", "--run", "'Adobe Photoshop CS6'", NULL };
 static const char *gimpcmd[]       = { "gimp", NULL };
+static const char *nemocmd[]       = { "nemo", "--no-desktop", NULL };
+static const char *nemosucmd[]     = { "gksu", "nemo", "--no-desktop", NULL };
 
 static const char *passcmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/3.txt", NULL };
 static const char *hostcmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/hosts.php", NULL };
-static const char *notescmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/notes.txt", NULL };
+static const char *notescmd[]      = { "gedit", "/media/ruut/MyDisk/Soft/Programming/notes.txt", NULL };
 
 static const char *gsacmd[]       = { "shutter", "-s", NULL };
 static const char *gswcmd[]       = { "shutter", "-w", NULL };
@@ -137,6 +142,21 @@ static const char *gsfcmd[]       = { "shutter", "-f", NULL };
 // static const char *gsaccmd[]       = { "gnome-screenshot", "-a", "-c", NULL };
 // static const char *gswccmd[]       = { "gnome-screenshot", "-w", "-c", NULL };
 static const char *gsfccmd[]       = { "gnome-screenshot", "-c", NULL };
+
+// Scripts
+static const char *toggleTouchpad[]  = { "bash", "/home/ruut/sh/toggleTouchPad.sh", NULL };
+
+// Change sound
+static const char *upVolume[]      = { "amixer", "set", "Master", "5%+", NULL }; // for debian
+static const char *downVolume[]    = { "amixer", "set", "Master", "5%-", NULL }; // for debian
+static const char *toggleVolume[]  = { "amixer", "set", "Master", "toggle", NULL }; // for debian
+// static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL }; // for ubuntu
+// static const char *downVolume[]    = { "amixer", "-D", "pulse", "sset", "Master", "5%-", NULL }; // for ubuntu
+// static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "sset", "Master", "toggle", NULL }; // for ubuntu
+
+static const char *toggleAudacious[]  = { "audacious", "-t", NULL };
+static const char *nextAudacious[]    = { "audacious", "-f", NULL };
+static const char *rewAudacious[]     = { "audacious", "-r", NULL };
 
 static const char *xkillcmd[]	   = { "xkill", NULL };
 static const char *shutdowncmd[]   = { "shutdown", "-h", "+0", NULL };
@@ -148,14 +168,17 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ ALT,                          XK_d,      spawn,          {.v = dmenucmd } },
 	{ ALT,                          XK_t,      spawn,          {.v = termcmd } },
-	{ ALT,                          XK_w,      spawn,          {.v = chromecmd } },
+	{ CTRL|ALT,                     XK_w,      spawn,          {.v = chromecmd } },
+	{ ALT,                          XK_w,      spawn,          {.v = googlechromecmd } },
 	{ ALT,                          XK_a,      spawn,          {.v = audaciouscmd } },
 	{ ALT|SHIFT,                    XK_x,      spawn,          {.v = atomcmd } },
 	{ ALT,		                    XK_x,      spawn,          {.v = vscodecmd } },
 	{ MODKEY|SHIFT,                 XK_x,      spawn,          {.v = sublimecmd } },
-	{ ALT,                          XK_f,	   spawn,	       {.v = firefoxcmd } },
+	// { ALT,                          XK_f,	   spawn,	       {.v = firefoxcmd } },
 	{ ALT,                          XK_y,	   spawn,	       {.v = yandexcmd } },
-	{ ALT,                          XK_e,	   spawn,	       {.v = pcmanfmcmd } },
+	{ ALT,                          XK_e,	   spawn,	       {.v = nemocmd } },
+	{ ALT|SHIFT,                    XK_e,	   spawn,	       {.v = nemosucmd } },
+	{ ALT,                          XK_p,	   spawn,	       {.v = pcmanfmcmd } },
 	{ ALT|SHIFT,                    XK_e,	   spawn,	       {.v = supcmanfmcmd } },
 	{ ALT,                          XK_v,	   spawn,	       {.v = virtualboxcmd } },
 	{ ALT|SHIFT,                    XK_v,	   spawn,	       {.v = suvirtualboxcmd } },
@@ -177,9 +200,18 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,	   spawn,	       {.v = shutdowncmd } },
 	{ MODKEY,                       XK_x,	   spawn,	       {.v = xkillcmd } },
 
+	{ MODKEY,                       XK_F7,	   spawn,	       {.v = toggleTouchpad } },
+	{ MODKEY,                       XK_F1,	   spawn,	       {.v = toggleVolume } },
+	{ MODKEY,                       XK_F2,	   spawn,	       {.v = downVolume } },
+	{ MODKEY,                       XK_F3,	   spawn,	       {.v = upVolume } },
+
+	{ MODKEY,                       XK_F5,	   spawn,	       {.v = toggleAudacious } },
+	{ MODKEY,                       XK_F6,	   spawn,	       {.v = nextAudacious } },
+	{ MODKEY,                       XK_F4,	   spawn,	       {.v = rewAudacious } },
+
 	{ MODKEY,                       XK_l,	   spawn,	       {.v = slock } },
 
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_space,  togglebar,      {0} },
 	{ MODKEY,                       XK_s,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_w,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -197,8 +229,8 @@ static Key keys[] = {
 	{ MODKEY|SHIFT,                 XK_s,      setlayout,      {.v = &layouts[5]} },
 	{ MODKEY|SHIFT,                 XK_c,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY|SHIFT,                 XK_h,      setlayout,      {.v = &layouts[7]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|SHIFT,                 XK_space,  togglefloating, {0} },
+	{ MODKEY,                       XK_b,      setlayout,      {0} },
+	{ MODKEY|SHIFT,                 XK_b,      togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|SHIFT,                 XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_k,      focusmon,       {.i = -1 } },
