@@ -87,7 +87,7 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "\uF009",          tile },    /* ◫ first entry is default */ /* \x25EB */
-	{ "\uF24D",   	         NULL },    /*  no layout function means floating behavior */ /* \xF24D */
+	{ "\uF24D",   	     NULL },    /*  no layout function means floating behavior */ /* \xF24D */
 	{ "\uF2D0",          monocle },    /* ▇ */
 	{ "\uF00A",          grid },    /* ▇ */
 	{ "\u259A",          dwindle },    /* ▇ */
