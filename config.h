@@ -149,7 +149,8 @@ static const char *toggleTouchpad[]  = { "bash", "/home/ruut/sh/toggleTouchPad.s
 // Change sound
 static const char *upVolume[]      = { "amixer", "set", "Master", "5%+", NULL }; // for debian
 static const char *downVolume[]    = { "amixer", "set", "Master", "5%-", NULL }; // for debian
-static const char *toggleVolume[]  = { "amixer", "set", "Master", "toggle", NULL }; // for debian
+// static const char *toggleVolume[]  = { "amixer", "set", "Master", "toggle", NULL }; // for debian
+static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "set", "Master", "1+", "toggle", NULL }; // for ubuntu
 // static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL }; // for ubuntu
 // static const char *downVolume[]    = { "amixer", "-D", "pulse", "sset", "Master", "5%-", NULL }; // for ubuntu
 // static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "sset", "Master", "toggle", NULL }; // for ubuntu
