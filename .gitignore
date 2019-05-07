@@ -1,4 +1,6 @@
+.vscode/ipch
 *.o
+*.bin
 *.swp
 *.save
 *.orig

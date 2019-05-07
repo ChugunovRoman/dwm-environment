@@ -6,7 +6,7 @@ static const char *fonts[] = {
 	"Terminus:size=8",
 	"FontAwesome:size=8"
 };
-static const char dmenufont[]       = "monospace:size=8";
+static const char dmenufont[]       = "monospace:size=10";
 static const char normbordercolor[] = "#1c1f25";
 static const char normbgcolor[]     = "#1c1f25"; // Цвет не выделенного фона панели
 static const char normfgcolor[]     = "#bbbbbb"; // Цвет не выделенного текста
@@ -41,27 +41,27 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class            instance    title       tags mask     isfloating   monitor */
-	{ "Gnome-terminal", NULL,       NULL,       1,            0,           -1 },
+	{ "Gnome-terminal", NULL,       NULL,       1,            0,           0 },
 
-	{ "Code",           NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Code",           NULL,       NULL,       1 << 1,       0,           1 },
 	{ "Sublime_text",   NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Atom", 		    NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "QtCreator", 		NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "QtCreator", 		NULL,       NULL,       1 << 1,       0,           0 },
 
 	{ "Firefox",        NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "luakit",         NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Google-chrome",  NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Chromium-browser",  NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Google-chrome",  NULL,       NULL,       1 << 2,       0,           0 },
+	{ "Chromium-browser",  NULL,       NULL,       1 << 2,       0,           0 },
 	{ "Yandex-browser-beta", NULL,       NULL,       1 << 2,       0,           -1 },
 
-	{ "pcmanfm-qt",     NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "Pcmanfm",        NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "Nautilus",       NULL,       NULL,       1 << 3,       0,           -1 },
-	{ "nemo",           NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "pcmanfm-qt",     NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Pcmanfm",        NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Nautilus",       NULL,       NULL,       1 << 3,       0,           0 },
+	{ "nemo",           NULL,       NULL,       1 << 3,       0,           0 },
 
-	{ "Audacious",      NULL,       NULL,       1 << 4,       0,           -1 },
-	{ "Audacity",       NULL,       NULL,       1 << 4,       0,           -1 },
-	{ "TelegramDesktop",NULL,       NULL,       1 << 4,       0,           -1 },
+	{ "Audacious",      NULL,       NULL,       1 << 4,       0,           0 },
+	// { "Audacity",       NULL,       NULL,       1 << 4,       0,           -1 },
+	{ "TelegramDesktop",NULL,       NULL,       1 << 4,       0,           0 },
 
 	{ "Gimp",           NULL,       NULL,       1 << 5,       0,           -1 },
 	{ "Photoshop.exe",  NULL,       NULL,       1 << 5,       0,           -1 },
@@ -69,15 +69,17 @@ static const Rule rules[] = {
 
 	{ "Mainwindow.py",  NULL,       NULL,       1 << 6,       0,           -1 },
 
-	{ "VirtualBox",     NULL,       NULL,       1 << 7,       0,           -1 },
+	{ "VirtualBox",     NULL,       NULL,       1 << 7,       0,           0 },
 
 	{ "qBittorrent",    NULL,       NULL,       1 << 8,       0,           -1 },
+
+	{ "bd",    			NULL,       NULL,       1 << 1,       1,           -1 },
 };
 
 /* layout(s) */
 static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 #include "grid.c"
 #include "fibonacci.c"
@@ -113,7 +115,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-H", "/home/ruut/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-i", "-l", "15", "-H", "/home/ruut/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]       = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *chromecmd[]     = { "chromium-browser", NULL };
 static const char *googlechromecmd[]     = { "google-chrome", NULL };
@@ -132,16 +134,16 @@ static const char *gimpcmd[]       = { "gimp", NULL };
 static const char *nemocmd[]       = { "nemo", "--no-desktop", NULL };
 static const char *nemosucmd[]     = { "gksu", "nemo", "--no-desktop", NULL };
 
-static const char *passcmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/3.txt", NULL };
-static const char *hostcmd[]       = { "gedit", "/media/ruut/MyDisk/Soft/Programming/hosts.php", NULL };
-static const char *notescmd[]      = { "gedit", "/media/ruut/MyDisk/Soft/Programming/notes.txt", NULL };
+static const char *passcmd[]       = { "gedit", "/media/ruut/ssd/Soft/Programming/3.txt", NULL };
+static const char *hostcmd[]       = { "gedit", "/media/ruut/ssd/Soft/Programming/hosts.php", NULL };
+static const char *notescmd[]      = { "gedit", "/media/ruut/ssd/Soft/Programming/notes.txt", NULL };
 
 static const char *gsacmd[]       = { "shutter", "-s", NULL };
 static const char *gswcmd[]       = { "shutter", "-w", NULL };
 static const char *gsfcmd[]       = { "shutter", "-f", NULL };
 // static const char *gsaccmd[]       = { "gnome-screenshot", "-a", "-c", NULL };
 // static const char *gswccmd[]       = { "gnome-screenshot", "-w", "-c", NULL };
-static const char *gsfccmd[]       = { "gnome-screenshot", "-c", NULL };
+static const char *gsfccmd[]       = { "gnome-screenshot", "-a", NULL };
 
 // Scripts
 static const char *toggleTouchpad[]  = { "bash", "/home/ruut/sh/toggleTouchPad.sh", NULL };
@@ -163,7 +165,7 @@ static const char *xkillcmd[]	   = { "xkill", NULL };
 static const char *shutdowncmd[]   = { "shutdown", "-h", "+0", NULL };
 static const char *rebootcmd[]	   = { "reboot", NULL };
 
-static const char *slock[]	   = { "slock", NULL };
+static const char *slock[]	  	   = { "slock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -186,16 +188,17 @@ static Key keys[] = {
 	{ ALT,		                    XK_p,	   spawn,	       {.v = photoshopcmd } },
 	{ ALT,      		            XK_g,	   spawn,	       {.v = gimpcmd } },
 
-	{ SHIFT,      		            XK_Print,  spawn,	       {.v = gsacmd } },
+	{ SHIFT,      		            XK_Print,  spawn,	       {.v = gsfccmd } },
+	// { SHIFT,      		            XK_Print,  spawn,	       {.v = gsacmd } },
 	{ ALT,                          XK_Print,  spawn,	       {.v = gswcmd } },
 	// { NULL,      		            XK_Print,  spawn,	       {.v = gsfcmd } },
 	// { CTRL|SHIFT,      		        XK_Print,  spawn,	       {.v = gsaccmd } },
 	// { CTRL|ALT|SHIFT,  		        XK_Print,  spawn,	       {.v = gswccmd } },
 	{ NULL,         		        XK_Print,  spawn,	       {.v = gsfccmd } },
 
-	{ CTRL,      		            XK_1,	   spawn,	       {.v = passcmd } },
-	{ CTRL,      		            XK_2,      spawn,	       {.v = hostcmd } },
-	{ CTRL,      		            XK_3,      spawn,	       {.v = notescmd } },
+	{ MODKEY|ALT,      		            XK_1,	   spawn,	       {.v = passcmd } },
+	{ MODKEY|ALT,      		            XK_2,      spawn,	       {.v = hostcmd } },
+	{ MODKEY|ALT,      		            XK_3,      spawn,	       {.v = notescmd } },
 
 	{ MODKEY,                       XK_r,	   spawn,	       {.v = rebootcmd } },
 	{ MODKEY,                       XK_h,	   spawn,	       {.v = shutdowncmd } },
