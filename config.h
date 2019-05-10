@@ -76,16 +76,18 @@ static const Rule rules[] = {
 	{ "bd",    			NULL,       NULL,       1 << 1,       1,           -1 },
 };
 
+#include "funcions/movestack.c"
+#include "funcions/shiftview.c"
+
+#include "layouts/grid.c"
+#include "layouts/fibonacci.c"
+#include "layouts/bstack.c"
+#include "layouts/bstackhoriz.c"
+
 /* layout(s) */
 static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
-
-#include "grid.c"
-#include "fibonacci.c"
-#include "bstack.c"
-#include "bstackhoriz.c"
-
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "\uF009",          tile },    /* ◫ first entry is default */ /* \x25EB */
@@ -95,7 +97,7 @@ static const Layout layouts[] = {
 	{ "\u259A",          dwindle },    /* ▇ */
 	{ "\u259E",          spiral },    /* ▇ */
 	{ "\uF0C9",          bstack },    /* ▇ */
-	{ "\uF0CA",          bstackhoriz },    /* ▇ */
+	{ "\uF0CA",          bstackhoriz },    /*  */
 
 };
 
@@ -241,10 +243,14 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,      focusmon,       {.i = +1 } },
 	{ MODKEY|ALT,                   XK_q,      tagmon,         {.i = -1 } },
 	{ MODKEY|ALT,                   XK_e,      tagmon,         {.i = +1 } },
+	{ MODKEY|ALT,                   XK_w,      movestack,      {.i = -1 } },
+	{ MODKEY|ALT,                   XK_s,      movestack,      {.i = +1 } },
+	{ MODKEY|ALT,                   XK_d,      shiftview,      {.i = -1 } },
+	{ MODKEY|ALT,                   XK_a,      shiftview,      {.i = +1 } },
 	{ MODKEY,                       XK_Left,   viewtoleft,     {0} },
 	{ MODKEY,                       XK_Right,  viewtoright,    {0} },
-	{ MODKEY|ShiftMask,             XK_Left,   tagtoleft,      {0} },
-	{ MODKEY|ShiftMask,             XK_Right,  tagtoright,     {0} },
+	{ MODKEY|SHIFT,		            XK_Left,   tagtoleft,      {0} },
+	{ MODKEY|SHIFT,		            XK_Right,  tagtoright,     {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
