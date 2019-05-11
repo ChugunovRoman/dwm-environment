@@ -25,7 +25,6 @@ Choose the dwm in gdm and login in your system
 My default keybindings:
 -----
 
-Mod key is Super (win key) by default
 
 Exec application: <br>
 * **Alt+d** - exec dmenu <br>
@@ -46,3 +45,9 @@ Change layouts: <br>
 * **Shift+ModKey+h** - set "bstackhoriz" layout <br>
 
 All keybinding is in the dwm/config.h fiile
+
+Note
+-----
+* Mod key is Super (win key) by default
+* By default the bar is hidden. For show bar use **ModKey+Space** keybinding
+* All keybinding you can change in dwm/config.h file
