@@ -1,0 +1,6 @@
+#!/bin/bash
+
+bash -c "cd dmenu; sudo make install"
+bash -c "cd dwm; sudo make install"
+bash -c "cd slock; sudo make install"
+bash -c "cd statusbar; cp -rf target/release/rust-dwm-status /usr/sbin/rust-dwm-status"

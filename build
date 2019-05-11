@@ -1,0 +1,6 @@
+#!/bin/bash
+
+bash -c "cd dmenu; make"
+bash -c "cd dwm; make"
+bash -c "cd slock; make"
+bash -c "cd statusbar; cargo build --release"
