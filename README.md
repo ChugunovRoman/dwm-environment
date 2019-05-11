@@ -1,5 +1,6 @@
 DWM environment
 ---------------
+![](https://raw.githubusercontent.com/ChugunovRoman/dwm-environment/master/screenshots/screenshot.png)
 
 Includes:
 ---------------
