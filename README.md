@@ -9,12 +9,18 @@ Includes:
 * slock 1.4
 * Rust status bar (need rust and cargo on target platform)
 
-Install
+Install binary
+------------
+- git clone git@github.com:ChugunovRoman/dwm-environment.git
+- cd dwm-environment
+- sduo ./install_precompiled
+
+Build and Install
 ------------
 - git clone git@github.com:ChugunovRoman/dwm-environment.git
 - cd dwm-environment
 - ./build
-- sudo bash ./install
+- sudo ./install
 
 Usage
 -----

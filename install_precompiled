@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bash -c "cp -rf ./bin/* /usr/sbin/"
