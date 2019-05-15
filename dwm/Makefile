@@ -53,12 +53,15 @@ install: all
 	@echo installing dwm.desktop into /usr/share/xsessions
 	@cp -rf ./dwm.desktop /usr/share/xsessions/dwm.desktop
 	@chmod 644 /usr/share/xsessions/dwm.desktop
+	@echo installing Awesome font into /usr/share/fonts
+	@cp -rf ./fonts/* /usr/share/fonts
 
 uninstall:
 	@echo removing executable file from ${DESTDIR}${PREFIX}/bin
 	@rm -f ${DESTDIR}${PREFIX}/bin/dwm
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
 	@rm -f ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	@echo removing dwm.desktop from /usr/share/xsessions
 	@rm -f /usr/share/xsessions/dwm.desktop
 
 .PHONY: all options clean dist install uninstall

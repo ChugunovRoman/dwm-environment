@@ -7,17 +7,17 @@ static const char *fonts[] = {
 	"FontAwesome:size=8"
 };
 static const char dmenufont[]       = "monospace:size=10";
-static const char normbordercolor[] = "#1c1f25";
+static const char normbordercolor[] = "#282c34";
 static const char normbgcolor[]     = "#1c1f25"; // Цвет не выделенного фона панели
 static const char normfgcolor[]     = "#bbbbbb"; // Цвет не выделенного текста
-static const char selbordercolor[]  = "#282c34";
+static const char selbordercolor[]  = "#06989a";
 static const char selbgcolor[]      = "#282c34"; // Цвет выделенного фона
 static const char selfgcolor[]      = "#eeeeee"; // цвет выделенного текста
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, 0: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 24;       /* snap pixel */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
+	 * xprop | grep -i class
 	 */
 	/* class            instance    title       tags mask     isfloating   monitor */
 	{ "Gnome-terminal", NULL,       NULL,       1,            0,           0 },
@@ -57,7 +58,7 @@ static const Rule rules[] = {
 	{ "pcmanfm-qt",     NULL,       NULL,       1 << 3,       0,           0 },
 	{ "Pcmanfm",        NULL,       NULL,       1 << 3,       0,           0 },
 	{ "Nautilus",       NULL,       NULL,       1 << 3,       0,           0 },
-	{ "nemo",           NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Nemo",           NULL,       NULL,       1 << 3,       0,           0 },
 
 	{ "Audacious",      NULL,       NULL,       1 << 4,       0,           0 },
 	// { "Audacity",       NULL,       NULL,       1 << 4,       0,           -1 },
@@ -74,6 +75,9 @@ static const Rule rules[] = {
 	{ "qBittorrent",    NULL,       NULL,       1 << 8,       0,           -1 },
 
 	{ "bd",    			NULL,       NULL,       1 << 1,       1,           -1 },
+
+	{ "Wine",    		NULL,       NULL,       NULL, 	      1,           0 },
+	{ "Zenity",    		NULL,       NULL,       NULL, 	      1,           0 },
 };
 
 #include "funcions/movestack.c"
@@ -117,42 +121,47 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-i", "-l", "15", "-H", "/home/ruut/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]       = { "gnome-terminal", "--hide-menubar", NULL };
-static const char *chromecmd[]     = { "chromium-browser", NULL };
+static const char *dmenucmd[]      		 = { "dmenu_run", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenuSysCmd[]      	 = { "dmenu_sys", "-m", dmenumon, "-i", "-l", "15", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenuClipCmd[]      	 = { "dmenu_clip", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenuRecentCmd[]      = { "dmenu_recent", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *termcmd[]       		 = { "gnome-terminal", "--hide-menubar", NULL };
+static const char *chromecmd[]     		 = { "chromium-browser", NULL };
 static const char *googlechromecmd[]     = { "google-chrome", NULL };
-static const char *yandexcmd[]     = { "yandex-browser", NULL };
-static const char *audaciouscmd[]  = { "audacious", NULL };
-static const char *sublimecmd[]    = { "sublime_text", NULL };
-static const char *vscodecmd[]     = { "code", NULL };
-static const char *atomcmd[]       = { "atom", NULL };
-static const char *firefoxcmd[]	   = { "firefox", NULL };
-static const char *pcmanfmcmd[]	   = { "pcmanfm-qt", NULL };
-static const char *supcmanfmcmd[]  = { "gksu", "pcmanfm-qt", NULL };
-static const char *virtualboxcmd[] = { "virtualbox", NULL };
-static const char *suvirtualboxcmd[]= { "gksu", "virtualbox", NULL };
-static const char *photoshopcmd[]  = { "/usr/share/playonlinux/playonlinux", "--run", "'Adobe Photoshop CS6'", NULL };
-static const char *gimpcmd[]       = { "gimp", NULL };
-static const char *nemocmd[]       = { "nemo", "--no-desktop", NULL };
-static const char *nemosucmd[]     = { "gksu", "nemo", "--no-desktop", NULL };
+static const char *yandexcmd[]     		 = { "yandex-browser", NULL };
+static const char *audaciouscmd[]  		 = { "audacious", NULL };
+static const char *sublimecmd[]    		 = { "sublime_text", NULL };
+static const char *vscodecmd[]     		 = { "code", NULL };
+static const char *atomcmd[]       		 = { "atom", NULL };
+static const char *firefoxcmd[]	   		 = { "firefox", NULL };
+static const char *pcmanfmcmd[]	   		 = { "pcmanfm-qt", NULL };
+static const char *supcmanfmcmd[]  		 = { "gksu", "pcmanfm-qt", NULL };
+static const char *virtualboxcmd[] 		 = { "virtualbox", NULL };
+static const char *suvirtualboxcmd[] 	 = { "gksu", "virtualbox", NULL };
+static const char *photoshopcmd[]  		 = { "/usr/share/playonlinux/playonlinux", "--run", "'Adobe Photoshop CS6'", NULL };
+static const char *gimpcmd[]       		 = { "gimp", NULL };
+static const char *nemocmd[]       		 = { "nemo", "--no-desktop", NULL };
+static const char *nemosucmd[]     		 = { "gksu", "nemo", "--no-desktop", NULL };
 
-static const char *passcmd[]       = { "gedit", "/media/ruut/ssd/Soft/Programming/3.txt", NULL };
-static const char *hostcmd[]       = { "gedit", "/media/ruut/ssd/Soft/Programming/hosts.php", NULL };
-static const char *notescmd[]      = { "gedit", "/media/ruut/ssd/Soft/Programming/notes.txt", NULL };
+static const char *passcmd[]       		 = { "gedit", "/media/ruut/ssd/Soft/Programming/3.txt", NULL };
+static const char *hostcmd[]       		 = { "gedit", "/media/ruut/ssd/Soft/Programming/hosts.php", NULL };
+static const char *notescmd[]      		 = { "gedit", "/media/ruut/ssd/Soft/Programming/notes.txt", NULL };
 
-static const char *gsacmd[]       = { "shutter", "-s", NULL };
-static const char *gswcmd[]       = { "shutter", "-w", NULL };
-static const char *gsfcmd[]       = { "shutter", "-f", NULL };
+static const char *gsacmd[]       		 = { "shutter", "-s", NULL };
+static const char *gswcmd[]       		 = { "shutter", "-w", NULL };
+static const char *gsfcmd[]       		 = { "shutter", "-f", NULL };
 // static const char *gsaccmd[]       = { "gnome-screenshot", "-a", "-c", NULL };
 // static const char *gswccmd[]       = { "gnome-screenshot", "-w", "-c", NULL };
-static const char *gsfccmd[]       = { "gnome-screenshot", "-a", NULL };
+static const char *gsfccmd[]       		 = { "gnome-screenshot", "-a", NULL };
 
 // Scripts
-static const char *toggleTouchpad[]  = { "bash", "/home/ruut/sh/toggleTouchPad.sh", NULL };
+static const char *toggleTouchpad[]  = { "bash", HOME"/sh/toggleTouchPad.sh", NULL };
 
 // Change sound
-static const char *upVolume[]      = { "amixer", "set", "Master", "5%+", NULL }; // for debian
-static const char *downVolume[]    = { "amixer", "set", "Master", "5%-", NULL }; // for debian
+static const char *upVolume5pre[]      = { "amixer", "set", "Master", "5%+", NULL };
+static const char *upVolume2pre[]      = { "amixer", "set", "Master", "2%+", NULL };
+static const char *downVolume5pre[]    = { "amixer", "set", "Master", "5%-", NULL };
+static const char *downVolume2pre[]    = { "amixer", "set", "Master", "2%-", NULL };
 // static const char *toggleVolume[]  = { "amixer", "set", "Master", "toggle", NULL }; // for debian
 static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "set", "Master", "1+", "toggle", NULL }; // for ubuntu
 // static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL }; // for ubuntu
@@ -170,8 +179,12 @@ static const char *rebootcmd[]	   = { "reboot", NULL };
 static const char *slock[]	  	   = { "slock", NULL };
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
+	/* modifier                     key        C function        bash script */
 	{ ALT,                          XK_d,      spawn,          {.v = dmenucmd } },
+	{ ALT,                  		XK_r,      spawn,          {.v = dmenuRecentCmd } },
+	{ MODKEY,                  		XK_r,      spawn,          {.v = dmenuSysCmd } },
+	{ ALT,                  		XK_c,      spawn,          {.v = dmenuClipCmd } },
+
 	{ ALT,                          XK_t,      spawn,          {.v = termcmd } },
 	{ CTRL|ALT,                     XK_w,      spawn,          {.v = chromecmd } },
 	{ ALT,                          XK_w,      spawn,          {.v = googlechromecmd } },
@@ -202,14 +215,16 @@ static Key keys[] = {
 	{ MODKEY|ALT,      		            XK_2,      spawn,	       {.v = hostcmd } },
 	{ MODKEY|ALT,      		            XK_3,      spawn,	       {.v = notescmd } },
 
-	{ MODKEY,                       XK_r,	   spawn,	       {.v = rebootcmd } },
-	{ MODKEY,                       XK_h,	   spawn,	       {.v = shutdowncmd } },
+	// { MODKEY,                       XK_r,	   spawn,	       {.v = rebootcmd } },
+	// { MODKEY,                       XK_h,	   spawn,	       {.v = shutdowncmd } },
 	{ MODKEY,                       XK_x,	   spawn,	       {.v = xkillcmd } },
 
 	{ MODKEY,                       XK_F7,	   spawn,	       {.v = toggleTouchpad } },
 	{ MODKEY,                       XK_F1,	   spawn,	       {.v = toggleVolume } },
-	{ MODKEY,                       XK_F2,	   spawn,	       {.v = downVolume } },
-	{ MODKEY,                       XK_F3,	   spawn,	       {.v = upVolume } },
+	{ MODKEY,                       XK_F2,	   spawn,	       {.v = downVolume2pre } },
+	{ MODKEY|ALT,                   XK_F2,	   spawn,	       {.v = downVolume5pre } },
+	{ MODKEY,                   	XK_F3,	   spawn,	       {.v = upVolume2pre } },
+	{ MODKEY|ALT,                   XK_F3,	   spawn,	       {.v = upVolume5pre } },
 
 	{ MODKEY,                       XK_F5,	   spawn,	       {.v = toggleAudacious } },
 	{ MODKEY,                       XK_F6,	   spawn,	       {.v = nextAudacious } },
@@ -245,8 +260,8 @@ static Key keys[] = {
 	{ MODKEY|ALT,                   XK_e,      tagmon,         {.i = +1 } },
 	{ MODKEY|ALT,                   XK_w,      movestack,      {.i = -1 } },
 	{ MODKEY|ALT,                   XK_s,      movestack,      {.i = +1 } },
-	{ MODKEY|ALT,                   XK_d,      shiftview,      {.i = -1 } },
-	{ MODKEY|ALT,                   XK_a,      shiftview,      {.i = +1 } },
+	{ MODKEY|ALT,                   XK_a,      shiftview,      {.i = -1 } },
+	{ MODKEY|ALT,                   XK_d,      shiftview,      {.i = +1 } },
 	{ MODKEY,                       XK_Left,   viewtoleft,     {0} },
 	{ MODKEY,                       XK_Right,  viewtoright,    {0} },
 	{ MODKEY|SHIFT,		            XK_Left,   tagtoleft,      {0} },
@@ -260,7 +275,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|SHIFT,                 XK_q,      quit,           {0} },
+	{ MODKEY|CTRL|SHIFT,                 XK_q,      quit,           {0} },
 };
 
 /* button definitions */

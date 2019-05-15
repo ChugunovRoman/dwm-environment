@@ -1,0 +1,25 @@
+#!/bin/bash
+set -o errexit
+
+HISTORY="$HOME/.dmenu_history"
+test -f "$HISTORY" || touch "$HISTORY"
+DATA=$(tac "$HISTORY")
+INPUT=$(dmenu $@ < "$HISTORY" -p "Recent:")
+test -n "$INPUT"
+
+# aliases
+case "$INPUT" in
+    shutdown)
+        CMD="shutdown -h 0" ;;
+esac
+
+# test if CMD exist in $PATH
+hash $(echo "$CMD" | cut -f1 -d ' ')
+
+# write input to history
+if ! grep -q "$INPUT" "$HISTORY"; then
+    echo "$INPUT\n" >> "$HISTORY"
+    sort "$HISTORY" -o "$HISTORY" &
+fi
+
+exec $CMD
