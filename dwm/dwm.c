@@ -275,6 +275,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void warp(const Client *c);
 
 /* variables */
 static Systray *systray = NULL;
@@ -979,6 +980,9 @@ focusmon(const Arg *arg)
 					in gedit and anjuta */
 	selmon = m;
 	focus(NULL);
+	if (mousewrap) {
+		warp(selmon->sel);
+	}
 }
 
 void
@@ -1549,11 +1553,35 @@ resizemouse(const Arg *arg)
 	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w + c->bw - 1, c->h + c->bw - 1);
 	XUngrabPointer(dpy, CurrentTime);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
+	if (m == selmon && mousewrap && (m->tagset[m->seltags] & m->sel->tags))
+		warp(m->sel);
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
 		sendmon(c, m);
 		selmon = m;
 		focus(NULL);
 	}
+}
+
+void
+warp(const Client *c)
+{
+	int x, y;
+
+	if (!c) {
+		XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon->wx + selmon->ww/2, selmon->wy + selmon->wh/2);
+		return;
+	}
+
+	if (!getrootptr(&x, &y) ||
+		(x > c->x - c->bw &&
+		y > c->y - c->bw &&
+		x < c->x + c->w + c->bw*2 &&
+		y < c->y + c->h + c->bw*2) ||
+		(y > c->mon->by && y < c->mon->by + bh) ||
+		(c->mon->topbar && !y))
+		return;
+
+	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w / 2, c->h / 2);
 }
 
 void

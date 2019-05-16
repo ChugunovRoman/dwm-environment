@@ -7,20 +7,22 @@ static const char *fonts[] = {
 	"FontAwesome:size=8"
 };
 static const char dmenufont[]       = "monospace:size=10";
-static const char normbordercolor[] = "#282c34";
+static const char normbordercolor[] = "#282c34"; // Цвет рамки неактивного окна
 static const char normbgcolor[]     = "#1c1f25"; // Цвет не выделенного фона панели
 static const char normfgcolor[]     = "#bbbbbb"; // Цвет не выделенного текста
-static const char selbordercolor[]  = "#06989a";
+static const char selbordercolor[]  = "#06989a"; // Цвет рамки активного окна
 static const char selbgcolor[]      = "#282c34"; // Цвет выделенного фона
 static const char selfgcolor[]      = "#eeeeee"; // цвет выделенного текста
+
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, 0: display systray on the last monitor*/
-static const int showsystray        = 1;        /* 0 means no systray */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int snap      = 24;       /* snap pixel */
-static const int showbar            = 0;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
+static const int showsystray        	 = 1;        /* 0 means no systray */
+static const unsigned int borderpx  	 = 2;        /* border pixel of windows */
+static const unsigned int snap      	 = 24;       /* snap pixel */
+static const int showbar            	 = 0;        /* 0 means no bar */
+static const int topbar             	 = 1;        /* 0 means bottom bar */
+static const unsigned int mousewrap		 = 1; // 1 - enable mouse warp, 0 - disable mouse warp
 
 /* tagging */
 static const char *tags[] = {
@@ -35,6 +37,7 @@ static const char *tags[] = {
 	"\uF26C"   /* noname/monitor */
 };
 
+// Привязка окон к тегам и мониторам
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -80,9 +83,10 @@ static const Rule rules[] = {
 	{ "Zenity",    		NULL,       NULL,       NULL, 	      1,           0 },
 };
 
-#include "funcions/movestack.c"
-#include "funcions/shiftview.c"
+#include "funcions/movestack.c" // функция для циклического перемещения окон
+#include "funcions/shiftview.c" // Перемещение по тегам вперед/назад
 
+// Доп. слои
 #include "layouts/grid.c"
 #include "layouts/fibonacci.c"
 #include "layouts/bstack.c"
@@ -178,6 +182,7 @@ static const char *rebootcmd[]	   = { "reboot", NULL };
 
 static const char *slock[]	  	   = { "slock", NULL };
 
+// Биндинги
 static Key keys[] = {
 	/* modifier                     key        C function        bash script */
 	{ ALT,                          XK_d,      spawn,          {.v = dmenucmd } },
