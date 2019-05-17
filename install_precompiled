@@ -1,3 +1,4 @@
 #!/bin/bash
 
 bash -c "cp -rf ./bin/* /usr/sbin/"
+bash -c "co -rf dwm/dwm.desktop /usr/share/xsessions/dwm.desktop"
