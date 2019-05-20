@@ -83,6 +83,9 @@ static const Rule rules[] = {
 	{ "Zenity",    					NULL,       NULL,       NULL, 	      1,           0 },
 	{ "Gnome-calendar",    			NULL,       NULL,       NULL, 	      1,           -1 },
 	{ "Gnome-calculator",    		NULL,       NULL,       NULL, 	      1,           -1 },
+	{ "File-roller",	    		NULL,       NULL,       NULL, 	      1,           0 },
+	{ "Minecraft 1.7.10",	    	NULL,       NULL,       NULL, 	      1,           0 },
+	{ "org-tlauncher-tlauncher-rmo-TLauncher",  NULL,       NULL,       NULL, 	      1,           0 },
 };
 
 #include "funcions/movestack.c" // функция для циклического перемещения окон
