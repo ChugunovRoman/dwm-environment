@@ -11,6 +11,8 @@ test -n "$INPUT"
 case "$INPUT" in
     shutdown)
         CMD="shutdown -h 0" ;;
+    *)
+        CMD="$INPUT" ;;
 esac
 
 # test if CMD exist in $PATH

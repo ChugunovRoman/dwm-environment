@@ -2,3 +2,4 @@
 
 bash -c "cp -rf ./bin/* /usr/sbin/"
 bash -c "co -rf dwm/dwm.desktop /usr/share/xsessions/dwm.desktop"
+bash -c "cd /usr/bin; ln -s `pwd`/dmenu/scripts/* ."

@@ -132,8 +132,10 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]      		 = { "dmenu_run", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuSysCmd[]      	 = { "dmenu_sys", "-m", dmenumon, "-i", "-l", "15", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *dmenuClipCmd[]      	 = { "dmenu_clip", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenuClipCmd[]      	 = { "dmenu_clip", "-m", dmenumon, "-i", "-l", "15", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuRecentCmd[]      = { "dmenu_recent", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenuFilesCmd[]       = { "dmenu_files", HOME, HOME, "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+
 static const char *termcmd[]       		 = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *chromecmd[]     		 = { "chromium-browser", NULL };
 static const char *googlechromecmd[]     = { "google-chrome", NULL };
@@ -194,6 +196,7 @@ static Key keys[] = {
 	{ ALT,                  		XK_r,      spawn,          {.v = dmenuRecentCmd } },
 	{ MODKEY,                  		XK_r,      spawn,          {.v = dmenuSysCmd } },
 	{ ALT,                  		XK_c,      spawn,          {.v = dmenuClipCmd } },
+	{ ALT,                  		XK_f,      spawn,          {.v = dmenuFilesCmd } },
 
 	{ ALT,                          XK_t,      spawn,          {.v = termcmd } },
 	{ CTRL|ALT,                     XK_w,      spawn,          {.v = chromecmd } },

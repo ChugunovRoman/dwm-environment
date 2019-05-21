@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o errexit
 
 target="$1"
 [ -z "$target" ] && target="$(realpath .)"
@@ -7,11 +8,11 @@ prompt="$2"
 while true; do
 	p="$prompt"
 	[ -z "$p" ] && p="$target"
-	sel="$(ls -1a "$target" |grep -v '^\.$' | dmenu -p "$p" -l 25)"
+	sel="$(ls -1a "$target" | grep -v '^\.$' | dmenu -p "$p")"
 	ec=$?
 	[ "$ec" -ne 0 ] && exit $ec
 
-	c="$(echo "$sel" |cut -b1)"
+	c="$(echo "$sel" | cut -b1)"
 	if [ "$c" = "/" ]; then
 		newt="$sel"
 	else
@@ -21,7 +22,7 @@ while true; do
 	if [ -e "$newt" ]; then
 		target="$newt"
 		if [ ! -d "$target" ]; then
-            nano "$target"
+            exec xdg-open "$target" &
 			# echo "$target"
 			exit 0
 		fi

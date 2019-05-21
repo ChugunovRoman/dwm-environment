@@ -1,8 +1,9 @@
 #!/bin/bash
 set -o errexit
 
-cmds="reboot
-shutdown"
+cmds="shutdown
+reboot
+killx"
 
 INPUT=$(echo -e "$cmds" | dmenu $@ -p "Sys:")
 test -n "$INPUT"
@@ -11,12 +12,8 @@ test -n "$INPUT"
 case "$INPUT" in
     shutdown)
         CMD="shutdown -h 0" ;;
-    google)
-        CMD="xdg-open http://google.com" ;;
-    chromium-work)
-        CMD="chromium --user-data-dir=$HOME/.config/chromium_work" ;;
-    ranger)
-        CMD="urxvtc -e ranger" ;;
+    killx)
+        CMD="killall Xorg" ;;
     *)
         CMD="$INPUT" ;;
 esac
