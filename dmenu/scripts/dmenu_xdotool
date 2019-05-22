@@ -1,0 +1,15 @@
+#!/bin/bash
+set -o errexit
+
+scripts="terminals"
+
+INPUT=$(echo -e "$scripts" | dmenu $@ -p "Scripts:")
+test -n "$INPUT"
+
+# aliases
+case "$INPUT" in
+    *)
+        CMD="$INPUT" ;;
+esac
+
+exec $CMD

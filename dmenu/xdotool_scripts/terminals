@@ -1,0 +1,36 @@
+#!/bin/bash
+
+xdotool mousemove 50 100 --screen 0;
+xdotool click 1;
+
+sleep 0.1;
+
+xdotool key "alt+t";
+xdotool key "alt+t";
+xdotool key "alt+t";
+xdotool key "alt+t";
+
+xdotool key "shift+super+c";
+
+sleep 1;
+
+xdotool mousemove 279 908;
+xdotool type "sr"; sleep 0.2; xdotool key Return;
+xdotool type "agu"; sleep 0.2; xdotool key Return;
+sleep 0.2;
+
+xdotool mousemove 999 908;
+xdotool type "htop"; sleep 0.2; xdotool key Return;
+sleep 0.2;
+
+xdotool mousemove 1580 908;
+xdotool type "alsamixer"; sleep 0.2; xdotool key Return;
+sleep 0.2;
+
+xdotool mousemove 80 100;
+for i in {0..10}; do
+    xdotool key "shift+ctrl+t";
+done;
+
+sleep 0.5
+xdotool key "alt+1";

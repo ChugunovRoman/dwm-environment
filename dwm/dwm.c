@@ -1914,6 +1914,7 @@ spawn(const Arg *arg)
 		|| arg->v == dmenuSysCmd
 		|| arg->v == dmenuClipCmd
 		|| arg->v == dmenuFilesCmd
+		|| arg->v == dmenuScriptsCmd
 		|| arg->v == dmenuRecentCmd)
 
 		dmenumon[0] = '0' + selmon->num;

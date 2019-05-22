@@ -135,6 +135,7 @@ static const char *dmenuSysCmd[]      	 = { "dmenu_sys", "-m", dmenumon, "-i", "
 static const char *dmenuClipCmd[]      	 = { "dmenu_clip", "-m", dmenumon, "-i", "-l", "15", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuRecentCmd[]      = { "dmenu_recent", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuFilesCmd[]       = { "dmenu_files", HOME, HOME, "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenuScriptsCmd[]     = { "dmenu_xdotool", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 
 static const char *termcmd[]       		 = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *chromecmd[]     		 = { "chromium-browser", NULL };
@@ -197,6 +198,7 @@ static Key keys[] = {
 	{ MODKEY,                  		XK_r,      spawn,          {.v = dmenuSysCmd } },
 	{ ALT,                  		XK_c,      spawn,          {.v = dmenuClipCmd } },
 	{ ALT,                  		XK_f,      spawn,          {.v = dmenuFilesCmd } },
+	{ ALT,                  		XK_s,      spawn,          {.v = dmenuScriptsCmd } },
 
 	{ ALT,                          XK_t,      spawn,          {.v = termcmd } },
 	{ CTRL|ALT,                     XK_w,      spawn,          {.v = chromecmd } },
