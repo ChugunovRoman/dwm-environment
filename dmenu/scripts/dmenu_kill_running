@@ -3,4 +3,4 @@ application=`xlsclients | cut -d' ' -f3 | sort -V`
 
 INPUT=$(echo -e "$application" | dmenu $@ -p "Kill:")
 
-[ ! -z "$INPUT" ] && exec pkill "$INPUT"
+[ ! -z "$INPUT" ] && exec pkill -9 "$INPUT"

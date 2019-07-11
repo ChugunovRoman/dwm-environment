@@ -86,6 +86,7 @@ static const Rule rules[] = {
 	{ "File-roller",	    		NULL,       NULL,       NULL, 	      1,           0 },
 	{ "Minecraft 1.7.10",	    	NULL,       NULL,       NULL, 	      1,           0 },
 	{ "org-tlauncher-tlauncher-rmo-TLauncher",  NULL,       NULL,       NULL, 	      1,           0 },
+	{ "dotnet",  					NULL,       "OpenSAGE Big Editor",       NULL, 	      1,           0 },
 };
 
 #include "funcions/movestack.c" // функция для циклического перемещения окон

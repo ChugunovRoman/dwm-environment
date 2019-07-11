@@ -10,20 +10,25 @@ xdotool key "alt+t";
 xdotool key "alt+t";
 xdotool key "alt+t";
 
+sleep 0.2;
+
 xdotool key "shift+super+c";
 
 sleep 1;
 
 xdotool mousemove 279 908;
+sleep 0.2;
 xdotool type "sr"; sleep 0.2; xdotool key Return;
 xdotool type "agu"; sleep 0.2; xdotool key Return;
 sleep 0.2;
 
 xdotool mousemove 999 908;
+sleep 0.2;
 xdotool type "htop"; sleep 0.2; xdotool key Return;
 sleep 0.2;
 
 xdotool mousemove 1580 908;
+sleep 0.2;
 xdotool type "alsamixer"; sleep 0.2; xdotool key Return;
 sleep 0.2;
 
