@@ -13,6 +13,10 @@ extern crate systemstat;
 use chan_signal::Signal;
 use systemstat::{Platform, System};
 
+// Symbols:
+// 🕨 🕩 🕪
+// 🔇 🔈 🔉 🔊 🔋 🔍 🔎 💾 🖴
+
 fn plugged(sys: &System) -> String {
     if let Ok(plugged) = sys.on_ac_power() {
         if plugged {
@@ -36,9 +40,9 @@ fn battery(sys: &System) -> String {
 fn ram(sys: &System) -> String {
     if let Ok(mem) = sys.memory() {
         let used = mem.total.as_usize() - mem.free.as_usize();
-        format!("▯ {}/{} MB", used / 1024 / 1024, mem.free.as_usize() / 1024 / 1024)
+        format!("💾 {}/{} MB", used / 1024 / 1024, mem.free.as_usize() / 1024 / 1024)
     } else {
-        "▯ _".to_string()
+        "💾 _".to_string()
     }
 }
 

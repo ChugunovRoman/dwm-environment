@@ -1,0 +1,44 @@
+#!/bin/bash
+set -o errexit
+
+CONFIG="network:
+  version: 2
+  renderer: NetworkManager
+  wifis:
+    wlp2s0:
+      dhcp4: yes
+      access-points:
+        REPLACE_SSID:
+          password: REPLACE_PASSWORD"
+
+cmds="`nmcli device wifi list | sed -e '1d;$d'`"
+# cmds="`nmcli device wifi list --rescan yes | sed -e '1d;$d'`"
+
+INPUT=$(echo -e "$cmds" | dmenu $@ -p "Sys:")
+
+if [ -z "$INPUT" ]; then
+    exit 0
+fi
+
+if [[ $INPUT == *"*"* ]]; then
+    ACTIVE="`nmcli connection show | sed -e '1d;$d' | head -1 | awk '{print $1}'`"
+    nmcli connection down "$ACTIVE"
+    exit 0
+fi
+
+SSID=`echo "$INPUT" | awk '{print $1}'`
+CONNECTION="`nmcli connection show | grep -i \"netplan-wlp2s0-$SSID\" | awk '{print $1}'`"
+
+echo "CONNECTION: $CONNECTION"
+if [ ! -z "$CONNECTION" ]; then
+    nmcli connection up "$CONNECTION"
+    exit 0
+else
+    PASSWORD=$(echo "" | dmenu -p "Password:")
+    sudo touch /etc/netplan/01-$SSID-connection.yaml
+    sudo chown $USER:$USER /etc/netplan/01-$SSID-connection.yaml
+    sudo printf "$CONFIG" | sed -r "s/REPLACE_SSID/$SSID/g" | sed -r "s/REPLACE_PASSWORD/$PASSWORD/g" > /etc/netplan/01-$SSID-connection.yaml
+    sudo netplan apply
+    nmcli device wifi connect "$SSID"
+fi
+

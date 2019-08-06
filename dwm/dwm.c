@@ -861,7 +861,7 @@ drawbar(Monitor *m)
 	drw_text(drw, x, 0, w, bh, m->ltsymbol, 0);
 	x += w;
 	xx = x;
-	if (m == selmon) { /* status is only drawn on selected monitor */
+	// if (m == selmon) { /* status is only drawn on selected monitor */
 		w = TEXTW(stext);
 		x = m->ww - w;
 		if (showsystray && m == systraytomon(m)) {
@@ -872,8 +872,8 @@ drawbar(Monitor *m)
 			w = m->ww - xx;
 		}
 		drw_text(drw, x, 0, w, bh, stext, 0);
-	} else
-		x = m->ww;
+	// } else
+	// 	x = m->ww;
 	if ((w = x - xx) > bh) {
 		x = xx;
 		if (m->sel) {
