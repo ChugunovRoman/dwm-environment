@@ -1,6 +1,6 @@
 #!/bin/bash
 
 bash -c "cp -rf ./bin/* /usr/sbin/"
-bash -c "co -rf dwm/dwm.desktop /usr/share/xsessions/dwm.desktop"
+bash -c "cp -rf dwm/dwm.desktop /usr/share/xsessions/dwm.desktop"
 bash -c "cd /usr/bin; ln -s `pwd`/dmenu/scripts/* ."
 bash -c "cd /usr/local/sbin; ln -s `pwd`/dmenu/xdotool_scripts/* ."

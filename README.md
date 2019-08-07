@@ -1,13 +1,13 @@
 DWM environment
 ---------------
-![](https://raw.githubusercontent.com/ChugunovRoman/dwm-environment/master/screenshots/screenshot.png)
+![](https://raw.githubusercontent.com/ChugunovRoman/dwm-environment/master/screenshots/screenshot_2.png)
 
 Includes:
 ---------------
 * dwm 6.1
 * dmenu 4.6
 * slock 1.4
-* Rust status bar (need rust and cargo on target platform)
+* Rust status bar (need rust and cargo on target platform for build)
 
 Install binary
 ------------
