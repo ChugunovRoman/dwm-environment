@@ -278,8 +278,10 @@ static Key keys[] = {
 	{ MODKEY|ALT,                   XK_s,      movestack,      {.i = +1 } },
 	{ MODKEY|ALT,                   XK_a,      shiftview,      {.i = -1 } },
 	{ MODKEY|ALT,                   XK_d,      shiftview,      {.i = +1 } },
-	{ MODKEY,                       XK_Left,   viewtoleft,     {0} },
-	{ MODKEY,                       XK_Right,  viewtoright,    {0} },
+	{ MODKEY|ALT,                   XK_Left,   shiftview,      {.i = -1 } },
+	{ MODKEY|ALT,                   XK_Right,  shiftview,      {.i = +1 } },
+	// { MODKEY,                       XK_Left,   viewtoleft,     {0} },
+	// { MODKEY,                       XK_Right,  viewtoright,    {0} },
 	{ MODKEY|SHIFT,		            XK_Left,   tagtoleft,      {0} },
 	{ MODKEY|SHIFT,		            XK_Right,  tagtoright,     {0} },
 	TAGKEYS(                        XK_1,                      0)
