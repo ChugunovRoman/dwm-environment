@@ -2,11 +2,11 @@
 
 /* appearance */
 static const char *fonts[] = {
-	"monospace:size=8",
-	"Terminus:size=8",
-	"FontAwesome:size=8"
+	"monospace:size=10",
+	"Terminus:size=10",
+	"FontAwesome:size=10"
 };
-static const char dmenufont[]       = "monospace:size=10";
+static const char dmenufont[]       = "monospace:size=12";
 static const char normbordercolor[] = "#282c34"; // Цвет рамки неактивного окна
 static const char normbgcolor[]     = "#1c1f25"; // Цвет не выделенного фона панели
 static const char normfgcolor[]     = "#bbbbbb"; // Цвет не выделенного текста
@@ -19,7 +19,7 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, 0: display systray on the last monitor*/
 static const int showsystray        	 = 1;        /* 0 means no systray */
 static const unsigned int borderpx  	 = 2;        /* border pixel of windows */
-static const unsigned int snap      	 = 24;       /* snap pixel */
+static const unsigned int snap      	 = 28;       /* snap pixel */
 static const int showbar            	 = 0;        /* 0 means no bar */
 static const int topbar             	 = 1;        /* 0 means bottom bar */
 static const unsigned int mousewrap		 = 1; // 1 - enable mouse warp, 0 - disable mouse warp
@@ -278,8 +278,8 @@ static Key keys[] = {
 	{ MODKEY|ALT,                   XK_s,      movestack,      {.i = +1 } },
 	{ MODKEY|ALT,                   XK_a,      shiftview,      {.i = -1 } },
 	{ MODKEY|ALT,                   XK_d,      shiftview,      {.i = +1 } },
-	{ MODKEY|ALT,                   XK_Left,   shiftview,      {.i = -1 } },
-	{ MODKEY|ALT,                   XK_Right,  shiftview,      {.i = +1 } },
+	{ MODKEY,                       XK_Left,   shiftview,      {.i = -1 } },
+	{ MODKEY,                       XK_Right,  shiftview,      {.i = +1 } },
 	// { MODKEY,                       XK_Left,   viewtoleft,     {0} },
 	// { MODKEY,                       XK_Right,  viewtoright,    {0} },
 	{ MODKEY|SHIFT,		            XK_Left,   tagtoleft,      {0} },
