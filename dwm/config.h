@@ -51,6 +51,7 @@ static const Rule rules[] = {
 	{ "Sublime_text",   			NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "Atom", 		    			NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "QtCreator", 					NULL,       NULL,       1 << 1,       0,           0 },
+	{ "jetbrains-clion", 			NULL,       NULL,       1 << 1,       0,           0 },
 
 	{ "Firefox",        			NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "luakit",         			NULL,       NULL,       1 << 2,       0,           -1 },
@@ -62,6 +63,8 @@ static const Rule rules[] = {
 	{ "Pcmanfm",        			NULL,       NULL,       1 << 3,       0,           0 },
 	{ "Nautilus",       			NULL,       NULL,       1 << 3,       0,           0 },
 	{ "Nemo",           			NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Postman",           			NULL,       NULL,       1 << 3,       0,           0 },
+	{ "NoSQLBooster for MongoDB",   NULL,       NULL,       1 << 3,       0,           0 },
 
 	{ "Audacious",      			NULL,       NULL,       1 << 4,       0,           0 },
 	// { "Audacity",       			NULL,       NULL,       1 << 4,       0,           -1 },
@@ -72,6 +75,7 @@ static const Rule rules[] = {
 	{ "Inkscape",       			NULL,       NULL,       1 << 5,       0,           -1 },
 
 	{ "Mainwindow.py",  			NULL,       NULL,       1 << 6,       0,           -1 },
+	{ "Steam",  					NULL,       NULL,       1 << 6,       0,           -1 },
 
 	{ "VirtualBox",     			NULL,       NULL,       1 << 7,       0,           0 },
 
