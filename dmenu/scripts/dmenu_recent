@@ -3,9 +3,10 @@ set -o errexit
 
 HISTORY="$HOME/.dmenu_history"
 test -f "$HISTORY" || touch "$HISTORY"
-DATA=$(tac "$HISTORY")
-INPUT=$(dmenu $@ < "$HISTORY" -p "Recent:")
-test -n "$INPUT"
+DATA="$(printf "$(cat "$HISTORY")")\n"
+REVERTED_DATA="$(printf "$DATA" | tac | awk '!x[$0]++')"
+# INPUT=$(dmenu $@ < "$HISTORY" -p "Recent:")
+INPUT=$(printf "$REVERTED_DATA" | dmenu $@ -p "Recent:")
 
 # aliases
 case "$INPUT" in
@@ -15,13 +16,15 @@ case "$INPUT" in
         CMD="$INPUT" ;;
 esac
 
-# test if CMD exist in $PATH
-hash $(echo "$CMD" | cut -f1 -d ' ')
+isExists=`whereis "$INPUT" | awk '{print $2}'`
 
-# write input to history
-if ! grep -q "$INPUT" "$HISTORY"; then
-    echo "$INPUT\n" >> "$HISTORY"
-    sort "$HISTORY" -o "$HISTORY" &
+if [[ -z "$isExists" ]]; then
+    printf "$(cat "$HISTORY" | head -n -1)" > "$HISTORY"
+
+    exit 0;
+else
+    echo "" >> "$HISTORY"
+
+    exec $CMD
 fi
 
-exec $CMD
