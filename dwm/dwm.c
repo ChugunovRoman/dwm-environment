@@ -972,14 +972,18 @@ focusmon(const Arg *arg)
 {
 	Monitor *m;
 
-	if (!mons->next)
+	if (!mons->next) {
 		return;
-	if ((m = dirtomon(arg->i)) == selmon)
+	}
+
+	if ((m = dirtomon(arg->i)) == selmon) {
 		return;
-	unfocus(selmon->sel, 0); /* s/1/0/ fixes input focus issues
-					in gedit and anjuta */
+	}
+
+	unfocus(selmon->sel, 0); // s/1/0/ fixes input focus issues in gedit and anjuta
 	selmon = m;
 	focus(NULL);
+
 	if (mousewrap) {
 		warp(selmon->sel);
 	}
@@ -1523,6 +1527,7 @@ resizemouse(const Arg *arg)
 	                None, cursor[CurResize]->cursor, CurrentTime) != GrabSuccess)
 		return;
 	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w + c->bw - 1, c->h + c->bw - 1);
+
 	do {
 		XMaskEvent(dpy, MOUSEMASK|ExposureMask|SubstructureRedirectMask, &ev);
 		switch(ev.type) {
@@ -1550,11 +1555,16 @@ resizemouse(const Arg *arg)
 			break;
 		}
 	} while (ev.type != ButtonRelease);
+
 	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w + c->bw - 1, c->h + c->bw - 1);
 	XUngrabPointer(dpy, CurrentTime);
+
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
-	if (m == selmon && mousewrap && (m->tagset[m->seltags] & m->sel->tags))
+
+	if (m == selmon && mousewrap && (m->tagset[m->seltags] & m->sel->tags)) {
 		warp(m->sel);
+	}
+
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
 		sendmon(c, m);
 		selmon = m;
@@ -1566,6 +1576,14 @@ void
 warp(const Client *c)
 {
 	int x, y;
+	Window w;
+
+	// Bool result = XQueryPointer(dpy, None, &root, &w, &mousePosX, &mousePosY, 0, 0, 0);
+
+	// printf("mousePosX: %d | mousePosY: %d \n", mousePosX, mousePosY);
+	// if (!result) {
+	// 	return;
+	// }
 
 	if (!c) {
 		XWarpPointer(dpy, None, root, 0, 0, 0, 0, selmon->wx + selmon->ww/2, selmon->wy + selmon->wh/2);
@@ -2594,10 +2612,10 @@ xerror(Display *dpy, XErrorEvent *ee)
 	|| (ee->request_code == X_ConfigureWindow && ee->error_code == BadMatch)
 	|| (ee->request_code == X_GrabButton && ee->error_code == BadAccess)
 	|| (ee->request_code == X_GrabKey && ee->error_code == BadAccess)
-	|| (ee->request_code == X_CopyArea && ee->error_code == BadDrawable))
+	|| (ee->request_code == X_CopyArea && ee->error_code == BadDrawable)
+	|| (ee->request_code == 139))
 		return 0;
-	fprintf(stderr, "dwm: fatal error: request code=%d, error code=%d\n",
-			ee->request_code, ee->error_code);
+	fprintf(stderr, "dwm: fatal error: request type=%d code=%d, error code=%d\n", ee->type, ee->request_code, ee->error_code);
 	return xerrorxlib(dpy, ee); /* may call exit */
 }
 
