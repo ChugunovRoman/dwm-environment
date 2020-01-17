@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.tpl": "html",
+        "*.mustache": "html",
+        "*.js": "javascriptreact",
+        "*.ts": "typescript",
+        "*.toml": "properties",
+        "*.service": "properties",
+        "xlib.h": "c",
+        "xft.h": "c",
+        "xkblib.h": "c",
+        "xinerama.h": "c"
+    }
+}
