@@ -8,7 +8,7 @@ prompt="$2"
 while true; do
 	p="$prompt"
 	[ -z "$p" ] && p="$target"
-	sel="$(ls -1a "$target" | grep -v '^\.$' | dmenu -p "$p")"
+	sel="$(ls -1a "$target" | grep -v '^\.$' | rofi -dmenu -theme arc-red-dark -p "$p")"
 	ec=$?
 	[ "$ec" -ne 0 ] && exit $ec
 
