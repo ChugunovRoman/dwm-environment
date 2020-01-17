@@ -135,10 +135,12 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]      		 = { "dmenu_run", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[]      		 = { "rofi", "-show", "drun", "-theme", "arc-red-dark", NULL };
+// static const char *dmenucmd[]      		 = { "dmenu_run", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuSysCmd[]      	 = { "dmenu_sys", "-m", dmenumon, "-i", "-l", "15", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuClipCmd[]      	 = { "dmenu_clip", "-m", dmenumon, "-i", "-l", "15", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *dmenuRecentCmd[]      = { "dmenu_recent", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *dmenuRecentCmd[]      = { "rofi", "-show", "run", "-theme", "arc-red-dark", NULL };
+// static const char *dmenuRecentCmd[]      = { "dmenu_recent", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuFilesCmd[]       = { "dmenu_files", HOME, HOME, "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuScriptsCmd[]     = { "dmenu_xdotool", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 
@@ -170,6 +172,8 @@ static const char *gsfcmd[]       		 = { "shutter", "-f", NULL };
 // static const char *gsaccmd[]       = { "gnome-screenshot", "-a", "-c", NULL };
 // static const char *gswccmd[]       = { "gnome-screenshot", "-w", "-c", NULL };
 static const char *gsfccmd[]       		 = { "gnome-screenshot", "-a", NULL };
+// static const char *screenshot_cmd[]		 	 = { "scrot", HOME"/Pictures/Screenshot_from_%F_%T.png", NULL };
+// static const char *screenshot_area_cmd[]	 = { "scrot", "-s", "Screenshot_from_%F_%T.png", "-e", "'mv $f ~/Pictures/'", NULL };
 
 // Scripts
 static const char *toggleTouchpad[]  = { "bash", HOME"/sh/toggleTouchPad.sh", NULL };
@@ -225,7 +229,7 @@ static Key keys[] = {
 
 	{ SHIFT,      		            XK_Print,  spawn,	       {.v = gsfccmd } },
 	// { SHIFT,      		            XK_Print,  spawn,	       {.v = gsacmd } },
-	{ ALT,                          XK_Print,  spawn,	       {.v = gswcmd } },
+	// { ALT,                          XK_Print,  spawn,	       {.v = gswcmd } },
 	// { NULL,      		            XK_Print,  spawn,	       {.v = gsfcmd } },
 	// { CTRL|SHIFT,      		        XK_Print,  spawn,	       {.v = gsaccmd } },
 	// { CTRL|ALT|SHIFT,  		        XK_Print,  spawn,	       {.v = gswccmd } },
