@@ -1,5 +1,8 @@
 .vscode/ipch
 .vscode/vs*
+dmenu/dmenu
+dwm/dwm
+slock/slock
 **/*.o
 **/*.bin
 **/*.swp
