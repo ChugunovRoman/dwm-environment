@@ -64,6 +64,8 @@ static const Rule rules[] = {
 	{ "Nautilus",       			NULL,       NULL,       1 << 3,       0,           0 },
 	{ "Nemo",           			NULL,       NULL,       1 << 3,       0,           0 },
 	{ "Postman",           			NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Skype",           			NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Sqlectron",           			NULL,       NULL,       1 << 3,       0,           0 },
 	{ "NoSQLBooster for MongoDB",   NULL,       NULL,       1 << 3,       0,           0 },
 
 	{ "Audacious",      			NULL,       NULL,       1 << 4,       0,           0 },
