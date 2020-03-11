@@ -1,0 +1,33 @@
+#!/bin/bash
+
+FILES_DIR="$HOME/.cache/roficlip";
+
+mkdir -p "$FILES_DIR";
+
+while true; do
+    currentValueHash="$(echo "$(xclip -selection c -o)" | sed ':a;N;$!ba;s/\n/\\n/g' | sha1sum)";
+    currentValue=$(echo "$(xclip -selection c -o)");
+    currentCount="$(ls $FILES_DIR | wc -l)";
+    lastValueHash="";
+    lastValue="";
+    count="1000"; # max entries in clipboard history
+    date="$(date +%s%N)";
+
+    # If directory is not empty then take a value from the latest file
+    if [ "$(ls -A $FILES_DIR)" ]; then
+        lastValueHash="$(cat "$FILES_DIR/$(ls $FILES_DIR | tail -1)" | sha1sum)";
+        lastValue="$(cat "$FILES_DIR/$(ls $FILES_DIR | tail -1)")";
+    fi
+
+    # If copied value is not equal to the value from latest file
+    if [ "$lastValueHash" != "$currentValueHash" ]; then
+        # Boundary by count files
+        if [ "$currentCount" -ge "$count" ]; then
+            rm "$FILES_DIR/$(ls $FILES_DIR | sort | head -1)"
+        fi
+
+        echo "$currentValue" | sed ':a;N;$!ba;s/\n/\\n/g' > "$FILES_DIR/$date";
+    fi
+
+    sleep 0.5;
+done

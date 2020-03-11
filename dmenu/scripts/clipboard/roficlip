@@ -1,0 +1,8 @@
+#!/bin/bash
+set -o errexit
+
+FILES_DIR="$HOME/.cache/roficlip";
+
+sel="$(cd $FILES_DIR && cat $(ls $FILES_DIR | sort -r | tr '\n' ' ') | rofi -dmenu -theme arc-red-dark -p 'clipboard')";
+
+echo -e "$sel" | xclip -selection c;
