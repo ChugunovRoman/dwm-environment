@@ -20,7 +20,7 @@ while true; do
     fi
 
     # If copied value is not equal to the value from latest file
-    if [ "$lastValueHash" != "$currentValueHash" ]; then
+    if [[ "$lastValueHash" != "$currentValueHash" && ! -z "$currentValue" ]]; then
         # Boundary by count files
         if [ "$currentCount" -ge "$count" ]; then
             rm "$FILES_DIR/$(ls $FILES_DIR | sort | head -1)"
