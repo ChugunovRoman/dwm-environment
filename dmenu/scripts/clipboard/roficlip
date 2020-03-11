@@ -3,6 +3,6 @@ set -o errexit
 
 FILES_DIR="$HOME/.cache/roficlip";
 
-sel="$(cd $FILES_DIR && cat $(ls $FILES_DIR | sort -r | tr '\n' ' ') | rofi -dmenu -theme arc-red-dark -p 'clipboard')";
+sel="$(cd $FILES_DIR && cat $(ls $FILES_DIR | sort -r | tr '\n' ' ') | rofi -dmenu -theme arc-red-dark -p 'clipboard' -i)";
 
-echo -e "$sel" | xclip -selection c;
+echo -en "$sel" | xclip -selection c;

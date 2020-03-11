@@ -4,7 +4,7 @@ After=systemd-user-sessions.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/roficlipd
+ExecStart=/usr/bin/roficlipd
 ExecStop=/bin/bash -c '`which killall` roficlipd'
 Restart=on-failure
 

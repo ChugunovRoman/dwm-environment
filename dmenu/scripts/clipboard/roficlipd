@@ -29,5 +29,5 @@ while true; do
         echo "$currentValue" | sed ':a;N;$!ba;s/\n/\\n/g' > "$FILES_DIR/$date";
     fi
 
-    sleep 0.5;
+    sleep 0.2;
 done
