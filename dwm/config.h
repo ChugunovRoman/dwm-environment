@@ -36,6 +36,18 @@ static const char *tags[] = {
 	"\uF013",  /* noname/settings */
 	"\uF26C"   /* noname/monitor */
 };
+// static const char *newtags[] = {
+// 	{"\uF120",  NULL },
+// 	"\uF120",  /* term/console */
+// 	"\uF121",  /* code/</> */
+// 	"\uF268",  /* web/chrome */
+// 	"\uF07C",  /* files/папка */
+// 	"\uF008",  /* media/кино */
+// 	"\uF03E",  /* graphics/картина */
+// 	"\uF11B",  /* games/gamepad */
+// 	"\uF013",  /* noname/settings */
+// 	"\uF26C"   /* noname/monitor */
+// };
 
 // Привязка окон к тегам и мониторам
 static const Rule rules[] = {
@@ -45,54 +57,59 @@ static const Rule rules[] = {
 	 * xprop | grep -i class
 	 */
 	/* class            			instance    title       tags mask     isfloating   monitor */
-	{ "Gnome-terminal", 			NULL,       NULL,       1,            0,           0 },
+	{ "Gnome-terminal", 						NULL,       NULL,       1,            0,           0 },
 
-	{ "Code",           			NULL,       NULL,       1 << 1,       0,           1 },
-	{ "Sublime_text",   			NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Atom", 		    			NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "QtCreator", 					NULL,       NULL,       1 << 1,       0,           0 },
-	{ "jetbrains-clion", 			NULL,       NULL,       1 << 1,       0,           0 },
+	{ "Code",           						NULL,       NULL,       1 << 1,       0,           1 },
+	{ "Sublime_text",   						NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "Atom", 		    						NULL,       NULL,       1 << 1,       0,           -1 },
+	{ "QtCreator", 								NULL,       NULL,       1 << 1,       0,           0 },
+	{ "jetbrains-clion", 						NULL,       NULL,       1 << 1,       0,           0 },
 
-	{ "Firefox",        			NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "luakit",         			NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Google-chrome",  			NULL,       NULL,       1 << 2,       0,           0 },
-	{ "Chromium-browser",  			NULL,       NULL,       1 << 2,       0,           0 },
-	{ "Yandex-browser-beta", 		NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Firefox",        						NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "luakit",         						NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Google-chrome",  						NULL,       NULL,       1 << 2,       0,           0 },
+	{ "Chromium-browser",  						NULL,       NULL,       1 << 2,       0,           0 },
+	{ "Yandex-browser-beta", 					NULL,       NULL,       1 << 2,       0,           -1 },
 
-	{ "pcmanfm-qt",     			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Pcmanfm",        			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Nautilus",       			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Nemo",           			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Postman",           			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Skype",           			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Sqlectron",           			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "NoSQLBooster for MongoDB",   NULL,       NULL,       1 << 3,       0,           0 },
+	{ "pcmanfm-qt",     						NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Pcmanfm",        						NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Nautilus",       						NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Nemo",           						NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Postman",           						NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Skype",           						NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Sqlectron",           					NULL,       NULL,       1 << 3,       0,           0 },
+	{ "NoSQLBooster for MongoDB",   			NULL,       NULL,       1 << 3,       0,           0 },
+	{ "Electron",   							NULL,       NULL,       1 << 3,       0,           0 },
+	{ "zoom",   								NULL,       NULL,       1 << 3,       0,           0 },
+	{ "FML early loading progress", 			NULL,       NULL,       1 << 3,       0,           0 },
+	{ "org-tlauncher-tlauncher-rmo-TLauncher",  NULL,       NULL,       1 << 3,       0,           0 },
+	{ "net-minecraftforge-installer-SimpleInstaller",   	NULL,       NULL,       1 << 3,       0,           0 },
 
-	{ "Audacious",      			NULL,       NULL,       1 << 4,       0,           0 },
-	// { "Audacity",       			NULL,       NULL,       1 << 4,       0,           -1 },
-	{ "TelegramDesktop",			NULL,       NULL,       1 << 4,       0,           0 },
+	{ "Audacious",      						NULL,       NULL,       1 << 4,       0,           0 },
+	// { "Audacity",       						NULL,       NULL,       1 << 4,       0,           -1 },
+	{ "TelegramDesktop",						NULL,       NULL,       1 << 4,       0,           0 },
 
-	{ "Gimp",           			NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "Photoshop.exe",  			NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "Inkscape",       			NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "Gimp",           						NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "Photoshop.exe",  						NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "Inkscape",       						NULL,       NULL,       1 << 5,       0,           -1 },
 
-	{ "Mainwindow.py",  			NULL,       NULL,       1 << 6,       0,           -1 },
-	{ "Steam",  					NULL,       NULL,       1 << 6,       0,           -1 },
+	{ "Mainwindow.py",  						NULL,       NULL,       1 << 6,       0,           -1 },
+	{ "Steam",  								NULL,       NULL,       1 << 6,       0,           -1 },
 
-	{ "VirtualBox",     			NULL,       NULL,       1 << 7,       0,           0 },
+	{ "VirtualBox",     						NULL,       NULL,       1 << 7,       0,           0 },
 
-	{ "qBittorrent",    			NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "qBittorrent",    						NULL,       NULL,       1 << 8,       0,           -1 },
 
-	{ "bd",    						NULL,       NULL,       1 << 1,       1,           -1 },
+	{ "bd",    									NULL,       NULL,       1 << 1,       1,           -1 },
 
-	{ "Wine",    					NULL,       NULL,       NULL, 	      1,           0 },
-	{ "Zenity",    					NULL,       NULL,       NULL, 	      1,           0 },
-	{ "Gnome-calendar",    			NULL,       NULL,       NULL, 	      1,           -1 },
-	{ "Gnome-calculator",    		NULL,       NULL,       NULL, 	      1,           -1 },
-	{ "File-roller",	    		NULL,       NULL,       NULL, 	      1,           0 },
-	{ "Minecraft 1.7.10",	    	NULL,       NULL,       NULL, 	      1,           0 },
+	{ "Wine",    								NULL,       NULL,       NULL, 	      1,           0 },
+	{ "Zenity",    								NULL,       NULL,       NULL, 	      1,           0 },
+	{ "Gnome-calendar",    						NULL,       NULL,       NULL, 	      1,           -1 },
+	{ "Gnome-calculator",    					NULL,       NULL,       NULL, 	      1,           -1 },
+	{ "File-roller",	    					NULL,       NULL,       NULL, 	      1,           0 },
+	{ "Minecraft 1.7.10",	    				NULL,       NULL,       NULL, 	      1,           0 },
 	{ "org-tlauncher-tlauncher-rmo-TLauncher",  NULL,       NULL,       NULL, 	      1,           0 },
-	{ "dotnet",  					NULL,       "OpenSAGE Big Editor",       NULL, 	      1,           0 },
+	{ "dotnet",  								NULL,       "OpenSAGE Big Editor",       NULL, 	      1,           0 },
 };
 
 #include "funcions/movestack.c" // функция для циклического перемещения окон
@@ -128,9 +145,9 @@ static const Layout layouts[] = {
 #define CTRL ControlMask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY|CTRL,           		KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|SHIFT,             	KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|CTRL|SHIFT, 			KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -259,6 +276,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,	   spawn,	       {.v = slock } },
 
 	{ MODKEY,                       XK_space,  togglebar,      {0} },
+	{ ALT,                          XK_space,  showScratchPad, {0} },
 	{ MODKEY,                       XK_s,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_w,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },

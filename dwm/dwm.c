@@ -56,6 +56,7 @@
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
 #define TAGMASK                 ((1 << LENGTH(tags)) - 1)
+#define TAGMASK2(X)             ((1 << X) - 1)
 #define TEXTW(X)                (drw_text(drw, 0, 0, 0, 0, (X), 0) + drw->fonts[0]->h)
 
 #define SYSTEM_TRAY_REQUEST_DOCK    0
@@ -215,6 +216,8 @@ static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
+static Client *nextfloating(Client *c);
+static Client *nextfloatingtag(Client *c, int tag);
 static void pop(Client *);
 static void propertynotify(XEvent *e);
 static void quit(const Arg *arg);
@@ -276,6 +279,7 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 static void warp(const Client *c);
+static void showScratchPad();
 
 /* variables */
 static Systray *systray = NULL;
@@ -312,6 +316,7 @@ static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
 static Window root;
+static Bool scratchPadVisibility = False;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -330,6 +335,34 @@ struct Pertag {
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
 
 /* function implementations */
+void
+showScratchPad(const Arg *arg) {
+	Client *client;
+	unsigned int tag, scratchtag = 1 << LENGTH(tags);
+
+	scratchPadVisibility = !scratchPadVisibility;
+
+	tag = scratchPadVisibility ? selmon->tagset[selmon->seltags] : scratchtag;
+
+	for(client = nextfloatingtag(selmon->clients, tag); client; client = nextfloatingtag(client->next, tag)) {
+		if (client->isfullscreen > 0)
+			continue;
+
+		client->tags = tag;
+
+		fprintf(stderr, "client, name: %s, isfloating: %d, isfullscreen: %d, oldstate: %d\n", client->name, client->isfloating, client->isfullscreen, client->oldstate);
+
+		if (scratchPadVisibility)
+			focus(client);
+		else
+			focus(NULL);
+
+		arrange(selmon);
+	}
+
+	restack(selmon);
+}
+
 void
 applyrules(Client *c)
 {
@@ -852,8 +885,7 @@ drawbar(Monitor *m)
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, m->tagset[m->seltags] & 1 << i ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
 		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i);
-		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
-		           occ & 1 << i, urg & 1 << i);
+		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i, occ & 1 << i, urg & 1 << i);
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);
@@ -1200,9 +1232,11 @@ manage(Window w, XWindowAttributes *wa)
 	XWindowChanges wc;
 	XkbStateRec kbd_state;
 
+
 	c = ecalloc(1, sizeof(Client));
 	c->win = w;
 	updatetitle(c);
+
 	if (XGetTransientForHint(dpy, w, &trans) && (t = wintoclient(trans))) {
 		c->mon = t->mon;
 		c->tags = t->tags;
@@ -1210,6 +1244,7 @@ manage(Window w, XWindowAttributes *wa)
 		c->mon = selmon;
 		applyrules(c);
 	}
+
 	/* geometry */
 	c->x = c->oldx = wa->x;
 	c->y = c->oldy = wa->y;
@@ -1242,8 +1277,7 @@ manage(Window w, XWindowAttributes *wa)
 		XRaiseWindow(dpy, c->win);
 	attach(c);
 	attachstack(c);
-	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
-	                (unsigned char *) &(c->win), 1);
+	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,(unsigned char *) &(c->win), 1);
 	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
 	setclientstate(c, NormalState);
 	if (c->mon == selmon)
@@ -1385,6 +1419,20 @@ Client *
 nexttiled(Client *c)
 {
 	for (; c && (c->isfloating || !ISVISIBLE(c)); c = c->next);
+	return c;
+}
+
+Client *
+nextfloating(Client *c)
+{
+	for (; c && (!c->isfloating || !ISVISIBLE(c)); c = c->next);
+	return c;
+}
+
+Client *
+nextfloatingtag(Client *c, int tag)
+{
+	for (; c && (!c->isfloating || !tag); c = c->next);
 	return c;
 }
 
@@ -1869,10 +1917,12 @@ setup(void)
 	xatom[Manager] = XInternAtom(dpy, "MANAGER", False);
 	xatom[Xembed] = XInternAtom(dpy, "_XEMBED", False);
 	xatom[XembedInfo] = XInternAtom(dpy, "_XEMBED_INFO", False);
+
 	/* init cursors */
 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
 	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
+
 	/* init appearance */
 	scheme[SchemeNorm].border = drw_clr_create(drw, normbordercolor);
 	scheme[SchemeNorm].bg = drw_clr_create(drw, normbgcolor);
@@ -1880,15 +1930,17 @@ setup(void)
 	scheme[SchemeSel].border = drw_clr_create(drw, selbordercolor);
 	scheme[SchemeSel].bg = drw_clr_create(drw, selbgcolor);
 	scheme[SchemeSel].fg = drw_clr_create(drw, selfgcolor);
-	/* init system tray */
-	updatesystray();
+
+	updatesystray(); // init system tray
+
 	/* init bars */
 	updatebars();
 	updatestatus();
+
 	/* EWMH support per view */
-	XChangeProperty(dpy, root, netatom[NetSupported], XA_ATOM, 32,
-			PropModeReplace, (unsigned char *) netatom, NetLast);
+	XChangeProperty(dpy, root, netatom[NetSupported], XA_ATOM, 32, PropModeReplace, (unsigned char *) netatom, NetLast);
 	XDeleteProperty(dpy, root, netatom[NetClientList]);
+
 	/* select for events */
 	wa.cursor = cursor[CurNormal]->cursor;
 	wa.event_mask = SubstructureRedirectMask|SubstructureNotifyMask|ButtonPressMask|PointerMotionMask
@@ -1936,9 +1988,12 @@ spawn(const Arg *arg)
 		|| arg->v == dmenuRecentCmd)
 
 		dmenumon[0] = '0' + selmon->num;
+
 	if (fork() == 0) {
-		if (dpy)
+		if (dpy) {
 			close(ConnectionNumber(dpy));
+		}
+
 		setsid();
 		execvp(((char **)arg->v)[0], (char **)arg->v);
 		fprintf(stderr, "dwm: execvp %s", ((char **)arg->v)[0]);
@@ -2034,10 +2089,13 @@ togglefloating(const Arg *arg)
 		return;
 	if (selmon->sel->isfullscreen) /* no support for fullscreen windows */
 		return;
+
 	selmon->sel->isfloating = !selmon->sel->isfloating || selmon->sel->isfixed;
-	if (selmon->sel->isfloating)
-		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
-		       selmon->sel->w, selmon->sel->h, 0);
+
+	if (selmon->sel->isfloating) {
+		resize(selmon->sel, selmon->sel->x, selmon->sel->y, selmon->sel->w, selmon->sel->h, 0);
+	}
+
 	arrange(selmon);
 }
 
@@ -2507,9 +2565,19 @@ view(const Arg *arg)
 {
 	int i;
 	unsigned int tmptag;
+	Client *client;
 
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
+	if (scratchPadVisibility) {
+		for(client = nextfloatingtag(selmon->clients, selmon->tagset[selmon->seltags]); client; client = nextfloatingtag(client->next, selmon->tagset[selmon->seltags])) {
+			if (client->isfullscreen > 0) {
+				continue;
+			}
+
+			client->tags = arg->ui & TAGMASK;
+		}
+	}
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK) {
 		selmon->pertag->prevtag = selmon->pertag->curtag;

@@ -10,5 +10,8 @@
         "xft.h": "c",
         "xkblib.h": "c",
         "xinerama.h": "c"
-    }
+    },
+    "[cpp]": {
+        "editor.formatOnSave": false
+    },
 }

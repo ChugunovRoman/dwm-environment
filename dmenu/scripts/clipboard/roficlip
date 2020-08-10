@@ -3,6 +3,28 @@ set -o errexit
 
 FILES_DIR="$HOME/.cache/roficlip";
 
-sel="$(cd $FILES_DIR && cat $(ls $FILES_DIR | sort -r | tr '\n' ' ') | rofi -dmenu -theme arc-red-dark -p 'clipboard' -i)";
+sel="$(cd $FILES_DIR && cat $(ls $FILES_DIR | sort -r | tr '\n' ' ') | cut -c1-10000 | rofi -xoffset 0 -dmenu -theme arc-red-dark -p 'clipboard' -i)";
 
-echo -en "$sel" | xclip -selection c;
+base64Sel=$(echo "$sel" | base64 | tr -d '\n');
+foundFileName=$(grep -rH "$sel" "$FILES_DIR" | head -1 | sed '1s/:/\n/' | head -1);
+
+files=$(ls $FILES_DIR | sort -r);
+for file in $files; do
+    content64=$(cat "$FILES_DIR/$file" | base64 | tr -d '\n');
+    cutedValue="${base64Sel::-4}";
+    foundFile="$(echo $(expr match "${content64::50000}" "${cutedValue::1000}"))";
+
+    if [ $foundFile -ne 0 ]; then
+        foundFileName="$FILES_DIR/$file";
+        break;
+    fi
+done
+
+if [ ! -z "$foundFileName" ]; then
+    sel="$(cat $foundFileName)";
+fi
+
+echo -n "$sel" | sed 's/ /\n/g' | xclip -selection c;
+
+
+
