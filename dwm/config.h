@@ -9,8 +9,8 @@ static const char *fonts[] = {
 static const char dmenufont[]       = "monospace:size=12";
 static const char normbordercolor[] = "#282c34"; // Цвет рамки неактивного окна
 static const char normbgcolor[]     = "#1c1f25"; // Цвет не выделенного фона панели
-static const char normfgcolor[]     = "#bbbbbb"; // Цвет не выделенного текста
-static const char selbordercolor[]  = "#06989a"; // Цвет рамки активного окна
+static const char normfgcolor[]     = "#555555"; // Цвет не выделенного текста
+static const char selbordercolor[]  = "#555555"; // Цвет рамки активного окна
 static const char selbgcolor[]      = "#282c34"; // Цвет выделенного фона
 static const char selfgcolor[]      = "#eeeeee"; // цвет выделенного текста
 
@@ -18,7 +18,7 @@ static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows sel
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, 0: display systray on the last monitor*/
 static const int showsystray        	 = 1;        /* 0 means no systray */
-static const unsigned int borderpx  	 = 2;        /* border pixel of windows */
+static const unsigned int borderpx  	 = 1;        /* border pixel of windows */
 static const unsigned int snap      	 = 28;       /* snap pixel */
 static const int showbar            	 = 0;        /* 0 means no bar */
 static const int topbar             	 = 1;        /* 0 means bottom bar */
@@ -26,15 +26,15 @@ static const unsigned int mousewrap		 = 1; // 1 - enable mouse warp, 0 - disable
 
 /* tagging */
 static const char *tags[] = {
-	"\uF120",  /* term/console */
-	"\uF121",  /* code/</> */
-	"\uF268",  /* web/chrome */
-	"\uF07C",  /* files/папка */
-	"\uF008",  /* media/кино */
-	"\uF03E",  /* graphics/картина */
-	"\uF11B",  /* games/gamepad */
-	"\uF013",  /* noname/settings */
-	"\uF26C"   /* noname/monitor */
+	"",
+	"",
+	"",
+	"",
+	"",
+	"\uF03E",
+	"",
+	"\uF013",
+	""
 };
 // static const char *newtags[] = {
 // 	{"\uF120",  NULL },
@@ -56,60 +56,63 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 * xprop | grep -i class
 	 */
-	/* class            			instance    title       tags mask     isfloating   monitor */
-	{ "Gnome-terminal", 						NULL,       NULL,       1,            0,           0 },
+	/* class            									instance    title       				tags mask     border width    isfloating   monitor */
+	{ "Gnome-terminal", 									NULL,       NULL,       				 1,            borderpx,             0,           0 },
 
-	{ "Code",           						NULL,       NULL,       1 << 1,       0,           1 },
-	{ "Sublime_text",   						NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "Atom", 		    						NULL,       NULL,       1 << 1,       0,           -1 },
-	{ "QtCreator", 								NULL,       NULL,       1 << 1,       0,           0 },
-	{ "jetbrains-clion", 						NULL,       NULL,       1 << 1,       0,           0 },
+	{ "Code",           									NULL,       NULL,       				 1 << 1,       borderpx,             0,            1 },
+	{ "Sublime_text",   									NULL,       NULL,       				 1 << 1,       borderpx,             0,           -1 },
+	{ "Atom", 		    									NULL,       NULL,       				 1 << 1,       borderpx,             0,           -1 },
+	{ "QtCreator", 											NULL,       NULL,       				 1 << 1,       borderpx,             0,            0 },
+	{ "jetbrains-clion", 									NULL,       NULL,       				 1 << 1,       borderpx,             0,            0 },
 
-	{ "Firefox",        						NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "luakit",         						NULL,       NULL,       1 << 2,       0,           -1 },
-	{ "Google-chrome",  						NULL,       NULL,       1 << 2,       0,           0 },
-	{ "Chromium-browser",  						NULL,       NULL,       1 << 2,       0,           0 },
-	{ "Yandex-browser-beta", 					NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Firefox",        									NULL,       NULL,       				 1 << 2,       borderpx,             0,           -1 },
+	{ "luakit",         									NULL,       NULL,       				 1 << 2,       borderpx,             0,           -1 },
+	{ "Google-chrome",  									NULL,       NULL,       				 1 << 2,       borderpx,             0,           0 },
+	{ "Chromium-browser",  									NULL,       NULL,       				 1 << 2,       borderpx,             0,           0 },
+	{ "Yandex-browser-beta", 								NULL,       NULL,       				 1 << 2,       borderpx,             0,           -1 },
 
-	{ "pcmanfm-qt",     						NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Pcmanfm",        						NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Nautilus",       						NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Nemo",           						NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Postman",           						NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Skype",           						NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Sqlectron",           					NULL,       NULL,       1 << 3,       0,           0 },
-	{ "NoSQLBooster for MongoDB",   			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "Electron",   							NULL,       NULL,       1 << 3,       0,           0 },
-	{ "zoom",   								NULL,       NULL,       1 << 3,       0,           0 },
-	{ "FML early loading progress", 			NULL,       NULL,       1 << 3,       0,           0 },
-	{ "org-tlauncher-tlauncher-rmo-TLauncher",  NULL,       NULL,       1 << 3,       0,           0 },
-	{ "net-minecraftforge-installer-SimpleInstaller",   	NULL,       NULL,       1 << 3,       0,           0 },
+	{ "pcmanfm-qt",     									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Pcmanfm",        									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Nautilus",       									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Nemo",           									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Postman",           									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Skype",           									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Sqlectron",           								NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "NoSQLBooster for MongoDB",   						NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Electron",   										NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "zoom",   											NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "FML early loading progress", 						NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "org-tlauncher-tlauncher-rmo-TLauncher",  			NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "net-minecraftforge-installer-SimpleInstaller",   	NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
 
-	{ "Audacious",      						NULL,       NULL,       1 << 4,       0,           0 },
-	// { "Audacity",       						NULL,       NULL,       1 << 4,       0,           -1 },
-	{ "TelegramDesktop",						NULL,       NULL,       1 << 4,       0,           0 },
+	{ "Audacious",      									NULL,       NULL,       				 1 << 4,       borderpx,             0,           0 },
+	{ "TelegramDesktop",									NULL,       NULL,       				 1 << 4,       borderpx,             0,           0 },
 
-	{ "Gimp",           						NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "Photoshop.exe",  						NULL,       NULL,       1 << 5,       0,           -1 },
-	{ "Inkscape",       						NULL,       NULL,       1 << 5,       0,           -1 },
+	{ "Gimp",           									NULL,       NULL,       				 1 << 5,       borderpx,             0,           -1 },
+	{ "Photoshop.exe",  									NULL,       NULL,       				 1 << 5,       borderpx,             0,           -1 },
+	{ "Inkscape",       									NULL,       NULL,       				 1 << 5,       borderpx,             0,           -1 },
 
-	{ "Mainwindow.py",  						NULL,       NULL,       1 << 6,       0,           -1 },
-	{ "Steam",  								NULL,       NULL,       1 << 6,       0,           -1 },
+	{ "Mainwindow.py",  									NULL,       NULL,       				 1 << 6,       borderpx,             0,           -1 },
+	{ "Steam",  											NULL,       NULL,       				 1 << 6,       borderpx,             0,           -1 },
+	{ "steam_app_109600",  									NULL,       NULL,       				 1 << 6,       0,             	 	 0,           -1 },
+	{ "neverwinter.exe",  									NULL,       NULL,       				 1 << 6,       0,             	 	 0,           -1 },
+	{ "warfork.x86_64",  									NULL,       NULL,       				 1 << 6,       0,             	 	 0,           -1 },
+	{ "csgo_linux64",  										NULL,       NULL,       				 1 << 6,       0,             	 	 0,           -1 },
 
-	{ "VirtualBox",     						NULL,       NULL,       1 << 7,       0,           0 },
+	{ "VirtualBox",     									NULL,       NULL,       				 1 << 7,       borderpx,             0,           0 },
 
-	{ "qBittorrent",    						NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "qBittorrent",    									NULL,       NULL,       				 1 << 8,       borderpx,             0,           -1 },
 
-	{ "bd",    									NULL,       NULL,       1 << 1,       1,           -1 },
+	{ "bd",    												NULL,       NULL,       				 1 << 1,       borderpx,             1,           -1 },
 
-	{ "Wine",    								NULL,       NULL,       NULL, 	      1,           0 },
-	{ "Zenity",    								NULL,       NULL,       NULL, 	      1,           0 },
-	{ "Gnome-calendar",    						NULL,       NULL,       NULL, 	      1,           -1 },
-	{ "Gnome-calculator",    					NULL,       NULL,       NULL, 	      1,           -1 },
-	{ "File-roller",	    					NULL,       NULL,       NULL, 	      1,           0 },
-	{ "Minecraft 1.7.10",	    				NULL,       NULL,       NULL, 	      1,           0 },
-	{ "org-tlauncher-tlauncher-rmo-TLauncher",  NULL,       NULL,       NULL, 	      1,           0 },
-	{ "dotnet",  								NULL,       "OpenSAGE Big Editor",       NULL, 	      1,           0 },
+	{ "Wine",    											NULL,       NULL,       				 NULL, 	       borderpx,             1,           0 },
+	{ "Zenity",    											NULL,       NULL,       				 NULL, 	       borderpx,             1,           0 },
+	{ "Gnome-calendar",    									NULL,       NULL,       				 NULL, 	       borderpx,             1,           -1 },
+	{ "Gnome-calculator",    								NULL,       NULL,       				 NULL, 	       borderpx,             1,           -1 },
+	{ "File-roller",	    								NULL,       NULL,       				 NULL, 	       borderpx,             1,           0 },
+	{ "Minecraft 1.7.10",	    							NULL,       NULL,       				 NULL, 	       borderpx,             1,           0 },
+	{ "org-tlauncher-tlauncher-rmo-TLauncher",  			NULL,       NULL,       				 NULL, 	       borderpx,             1,           0 },
+	{ "dotnet",  											NULL,       "OpenSAGE Big Editor",       NULL, 	       borderpx,             1,           0 },
 };
 
 #include "funcions/movestack.c" // функция для циклического перемещения окон
@@ -157,15 +160,17 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[]      		 = { "rofi", "-show", "drun", "-theme", "arc-red-dark", NULL };
 // static const char *dmenucmd[]      		 = { "dmenu_run", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuSysCmd[]      	 = { "dmenu_sys", "-m", dmenumon, "-i", "-l", "15", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *dmenuClipCmd[]      	 = { "roficlip", NULL };
+static const char *dmenuClipCmd[]      	 = { "rofi", "-theme", "arc-red-dark", "-modi", "clipboard:greenclip print", "-show", "clipboard", "-run-command", "{cmd}", NULL };
 static const char *dmenuRecentCmd[]      = { "rofi", "-show", "run", "-theme", "arc-red-dark", NULL };
 // static const char *dmenuRecentCmd[]      = { "dmenu_recent", "-m", dmenumon, "-i", "-l", "15", "-H", HOME"/.dmenu_history", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuFilesCmd[]       = { "dmenu_files", HOME, HOME, "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *dmenuScriptsCmd[]     = { "dmenu_xdotool", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static const char *rofiSelectedToTabbedCmd[]     = { "rofi_select_to_tabbed.pl", NULL };
+static const char *rofiFocusedToTabbedCmd[]     = { "rofi_focused_to_tabbed.pl", NULL };
 
 static const char *termcmd[]       		 = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *chromecmd[]     		 = { "chromium-browser", NULL };
-static const char *googlechromecmd[]     = { "google-chrome", NULL };
+static const char *googlechromecmd[]     = { "google-chrome-stable", NULL };
 static const char *yandexcmd[]     		 = { "yandex-browser", NULL };
 static const char *audaciouscmd[]  		 = { "audacious", NULL };
 static const char *sublimecmd[]    		 = { "sublime_text", NULL };
@@ -227,6 +232,8 @@ static Key keys[] = {
 	{ ALT,                  		XK_c,      spawn,          {.v = dmenuClipCmd } },
 	{ ALT,                  		XK_f,      spawn,          {.v = dmenuFilesCmd } },
 	{ ALT,                  		XK_s,      spawn,          {.v = dmenuScriptsCmd } },
+	{ MODKEY,                  		XK_q,      spawn,          {.v = rofiSelectedToTabbedCmd } },
+	{ MODKEY|SHIFT,                 XK_q,      spawn,          {.v = rofiFocusedToTabbedCmd } },
 
 	{ ALT,                          XK_t,      spawn,          {.v = termcmd } },
 	{ CTRL|ALT,                     XK_w,      spawn,          {.v = chromecmd } },
@@ -286,9 +293,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
-	{ MODKEY|SHIFT,                 XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY|SHIFT,                 XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|SHIFT,                 XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|SHIFT,                 XK_g,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY|SHIFT,                 XK_d,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY|SHIFT,                 XK_s,      setlayout,      {.v = &layouts[5]} },
@@ -298,10 +305,10 @@ static Key keys[] = {
 	{ MODKEY|SHIFT,                 XK_b,      togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|SHIFT,                 XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_q,      focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_e,      focusmon,       {.i = +1 } },
-	{ MODKEY|ALT,                   XK_q,      tagmon,         {.i = -1 } },
-	{ MODKEY|ALT,                   XK_e,      tagmon,         {.i = +1 } },
+	// { MODKEY,                       XK_q,      focusmon,       {.i = -1 } },
+	// { MODKEY,                       XK_e,      focusmon,       {.i = +1 } },
+	// { MODKEY|ALT,                   XK_q,      tagmon,         {.i = -1 } },
+	// { MODKEY|ALT,                   XK_e,      tagmon,         {.i = +1 } },
 	{ MODKEY|ALT,                   XK_w,      movestack,      {.i = -1 } },
 	{ MODKEY|ALT,                   XK_s,      movestack,      {.i = +1 } },
 	{ MODKEY|ALT,                   XK_a,      shiftview,      {.i = -1 } },
