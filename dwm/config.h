@@ -35,6 +35,7 @@ static const unsigned int mousewrap		 = 1; // 1 - enable mouse warp, 0 - disable
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "\uF009",          tile },    /* ◫ first entry is default */ /* \x25EB */
+	{ "𝌇",              tile2 },    /* ◫ first entry is default */ /* \x25EB */
 	{ "\uF24D",   	     NULL },    /*  no layout function means floating behavior */ /* \xF24D */
 	{ "\uF2D0",          monocle },    /* ▇ */
 	{ "\uF00A",          grid },    /* ▇ */
@@ -47,13 +48,13 @@ static const Layout layouts[] = {
 /* tagging */
 // icon			default layout
 static const Tag tags[] = {
-	{ "",		&layouts[6] },
-	{ "",		&layouts[2] },
+	{ "",		&layouts[7] },
+	{ "",		&layouts[3] },
 	{ "",		&layouts[0] },
-	{ "",		&layouts[2] },
-	{ "",		&layouts[0] },
+	{ "",		&layouts[3] },
+	{ "",		&layouts[1] },
 	{ "\uF03E",	&layouts[0] },
-	{ "",		&layouts[2] },
+	{ "",		&layouts[3] },
 	{ "\uF013",	&layouts[0] },
 	{ "",		&layouts[0] }
 };
