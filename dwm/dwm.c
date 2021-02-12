@@ -1352,6 +1352,13 @@ void manage(Window w, XWindowAttributes *wa)
 	c = ecalloc(1, sizeof(Client));
 	c->win = w;
 	updatetitle(c);
+
+	/* geometry */
+	c->x = c->oldx = wa->x;
+	c->y = c->oldy = wa->y;
+	c->w = c->oldw = wa->width;
+	c->h = c->oldh = wa->height;
+	c->oldbw = wa->border_width;
 	c->bw = borderpx;
 
 	if (XGetTransientForHint(dpy, w, &trans) && (t = wintoclient(trans)))
@@ -1364,13 +1371,6 @@ void manage(Window w, XWindowAttributes *wa)
 		c->mon = selmon;
 		applyrules(c);
 	}
-
-	/* geometry */
-	c->x = c->oldx = wa->x;
-	c->y = c->oldy = wa->y;
-	c->w = c->oldw = wa->width;
-	c->h = c->oldh = wa->height;
-	c->oldbw = wa->border_width;
 
 	if (c->x + WIDTH(c) > c->mon->mx + c->mon->mw)
 		c->x = c->mon->mx + c->mon->mw - WIDTH(c);
