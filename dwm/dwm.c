@@ -215,6 +215,12 @@ typedef struct
 	int monitor;
 } Rule;
 
+typedef struct
+{
+	const char *symbol;
+	const Layout *layout;
+} Tag;
+
 typedef struct Systray Systray;
 struct Systray
 {
@@ -583,7 +589,7 @@ void buttonpress(XEvent *e)
 	{
 		i = x = 0;
 		do
-			x += TEXTW(tags[i]);
+			x += TEXTW(tags[i].symbol);
 		while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags))
 		{
@@ -865,9 +871,9 @@ createmon(void)
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
-	m->lt[0] = &layouts[0];
+	m->lt[0] = tags[0].layout;
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
-	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
+	strncpy(m->ltsymbol, tags[0].layout->symbol, sizeof m->ltsymbol);
 	if (!(m->pertag = (Pertag *)calloc(1, sizeof(Pertag))))
 		die("fatal: could not malloc() %u bytes\n", sizeof(Pertag));
 	m->pertag->curtag = m->pertag->prevtag = 1;
@@ -880,7 +886,10 @@ createmon(void)
 		m->pertag->mfacts[i] = m->mfact;
 
 		/* init layouts */
-		m->pertag->ltidxs[i][0] = m->lt[0];
+		if (i < LENGTH(tags))
+			m->pertag->ltidxs[i + 1][0] = tags[i].layout;
+		else
+			m->pertag->ltidxs[i][0] = tags[LENGTH(tags) - 1].layout;
 		m->pertag->ltidxs[i][1] = m->lt[1];
 		m->pertag->sellts[i] = m->sellt;
 
@@ -970,9 +979,9 @@ void drawbar(Monitor *m)
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++)
 	{
-		w = TEXTW(tags[i]);
+		w = TEXTW(tags[i].symbol);
 		drw_setscheme(drw, m->tagset[m->seltags] & 1 << i ? &scheme[SchemeSel] : &scheme[SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, tags[i], urg & 1 << i);
+		drw_text(drw, x, 0, w, bh, tags[i].symbol, urg & 1 << i);
 		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i, occ & 1 << i, urg & 1 << i);
 		x += w;
 	}

@@ -1,5 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
+#include "funcions/movestack.c" // функция для циклического перемещения окон
+
+// Доп. слои
+#include "layouts/grid.c"
+#include "layouts/fibonacci.c"
+#include "layouts/bstack.c"
+#include "layouts/bstackhoriz.c"
+
 /* appearance */
 static const char *fonts[] = {
 	"monospace:size=10",
@@ -20,34 +28,37 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        	 = 1;        /* 0 means no systray */
 static const unsigned int borderpx  	 = 1;        /* border pixel of windows */
 static const unsigned int snap      	 = 28;       /* snap pixel */
-static const int showbar            	 = 0;        /* 0 means no bar */
+static const int showbar            	 = 1;        /* 0 means no bar */
 static const int topbar             	 = 1;        /* 0 means bottom bar */
 static const unsigned int mousewrap		 = 1; // 1 - enable mouse warp, 0 - disable mouse warp
 
-/* tagging */
-static const char *tags[] = {
-	"",
-	"",
-	"",
-	"",
-	"",
-	"\uF03E",
-	"",
-	"\uF013",
-	""
+static const Layout layouts[] = {
+	/* symbol     arrange function */
+	{ "\uF009",          tile },    /* ◫ first entry is default */ /* \x25EB */
+	{ "\uF24D",   	     NULL },    /*  no layout function means floating behavior */ /* \xF24D */
+	{ "\uF2D0",          monocle },    /* ▇ */
+	{ "\uF00A",          grid },    /* ▇ */
+	{ "\u259A",          dwindle },    /* ▇ */
+	{ "\u259E",          spiral },    /* ▇ */
+	{ "\uF0C9",          bstack },    /* ▇ */
+	{ "\uF0CA",          bstackhoriz },    /*  */
 };
-// static const char *newtags[] = {
-// 	{"\uF120",  NULL },
-// 	"\uF120",  /* term/console */
-// 	"\uF121",  /* code/</> */
-// 	"\uF268",  /* web/chrome */
-// 	"\uF07C",  /* files/папка */
-// 	"\uF008",  /* media/кино */
-// 	"\uF03E",  /* graphics/картина */
-// 	"\uF11B",  /* games/gamepad */
-// 	"\uF013",  /* noname/settings */
-// 	"\uF26C"   /* noname/monitor */
-// };
+
+/* tagging */
+// icon			default layout
+static const Tag tags[] = {
+	{ "",		&layouts[6] },
+	{ "",		&layouts[2] },
+	{ "",		&layouts[0] },
+	{ "",		&layouts[2] },
+	{ "",		&layouts[0] },
+	{ "\uF03E",	&layouts[0] },
+	{ "",		&layouts[2] },
+	{ "\uF013",	&layouts[0] },
+	{ "",		&layouts[0] }
+};
+
+#include "funcions/shiftview.c" // Перемещение по тегам вперед/назад
 
 // Привязка окон к тегам и мониторам
 static const Rule rules[] = {
@@ -115,31 +126,10 @@ static const Rule rules[] = {
 	{ "dotnet",  											NULL,       "OpenSAGE Big Editor",       NULL, 	       borderpx,             1,           0 },
 };
 
-#include "funcions/movestack.c" // функция для циклического перемещения окон
-#include "funcions/shiftview.c" // Перемещение по тегам вперед/назад
-
-// Доп. слои
-#include "layouts/grid.c"
-#include "layouts/fibonacci.c"
-#include "layouts/bstack.c"
-#include "layouts/bstackhoriz.c"
-
 /* layout(s) */
 static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
-static const Layout layouts[] = {
-	/* symbol     arrange function */
-	{ "\uF009",          tile },    /* ◫ first entry is default */ /* \x25EB */
-	{ "\uF24D",   	     NULL },    /*  no layout function means floating behavior */ /* \xF24D */
-	{ "\uF2D0",          monocle },    /* ▇ */
-	{ "\uF00A",          grid },    /* ▇ */
-	{ "\u259A",          dwindle },    /* ▇ */
-	{ "\u259E",          spiral },    /* ▇ */
-	{ "\uF0C9",          bstack },    /* ▇ */
-	{ "\uF0CA",          bstackhoriz },    /*  */
-
-};
 
 /* key definitions */
 #define MODKEY Mod4Mask
