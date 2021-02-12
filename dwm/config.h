@@ -17,7 +17,7 @@ static const char *fonts[] = {
 static const char dmenufont[]       = "monospace:size=12";
 static const char normbordercolor[] = "#282c34"; // Цвет рамки неактивного окна
 static const char normbgcolor[]     = "#1c1f25"; // Цвет не выделенного фона панели
-static const char normfgcolor[]     = "#555555"; // Цвет не выделенного текста
+static const char normfgcolor[]     = "#bbbbbb"; // Цвет не выделенного текста
 static const char selbordercolor[]  = "#555555"; // Цвет рамки активного окна
 static const char selbgcolor[]      = "#282c34"; // Цвет выделенного фона
 static const char selfgcolor[]      = "#eeeeee"; // цвет выделенного текста
