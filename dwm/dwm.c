@@ -179,6 +179,11 @@ typedef struct
 	const char *symbol;
 	void (*arrange)(Monitor *);
 } Layout;
+typedef struct
+{
+	const char *symbol;
+	const char *command;
+} ScriptButton;
 
 typedef struct Pertag Pertag;
 struct Monitor
@@ -749,13 +754,12 @@ void clientmessage(XEvent *e)
 	{
 		if (!ISVISIBLE(c))
 		{
-			c->mon->seltags ^= 1;
-			c->mon->tagset[c->mon->seltags] = c->tags;
 			for (i = 0; !(c->tags & 1 << i); i++)
 				;
 			view(&(Arg){.ui = 1 << i});
 		}
-		pop(c);
+		focus(c);
+		restack(selmon);
 	}
 }
 
