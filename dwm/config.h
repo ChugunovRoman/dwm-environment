@@ -28,7 +28,7 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        	 = 1;        /* 0 means no systray */
 static const unsigned int borderpx  	 = 1;        /* border pixel of windows */
 static const unsigned int snap      	 = 28;       /* snap pixel */
-static const int showbar            	 = 1;        /* 0 means no bar */
+static const int showbar            	 = 0;        /* 0 means no bar */
 static const int topbar             	 = 1;        /* 0 means bottom bar */
 static const unsigned int mousewrap		 = 1; // 1 - enable mouse warp, 0 - disable mouse warp
 
@@ -213,6 +213,13 @@ static const char *shutdowncmd[]   = { "shutdown", "-h", "+0", NULL };
 static const char *rebootcmd[]	   = { "reboot", NULL };
 
 static const char *slock[]	  	   = { "slock", NULL };
+
+// Command for script buttons
+static const char *wallpaper[]	  	   = { "wallpaper.sh", NULL };
+
+static const ScriptButton script_buttons[] = {
+	{ "",	wallpaper },
+};
 
 // Биндинги
 static Key keys[] = {

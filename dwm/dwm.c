@@ -353,6 +353,7 @@ static char stext[256];
 static int screen;
 static int sw, sh;		/* X display screen geometry width, height */
 static int bh, blw = 0; /* bar geometry */
+static int sbw = 0;		/* script buttons bar width */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
 static void (*handler[LASTEvent])(XEvent *) = {
@@ -606,6 +607,19 @@ void buttonpress(XEvent *e)
 			click = ClkLtSymbol;
 		else if (ev->x > selmon->ww - TEXTW(stext))
 			click = ClkStatusText;
+		else if (ev->x > x + blw && ev->x < x + blw + sbw)
+		{
+			unsigned short i1 = 0;
+			unsigned short x1 = x + blw;
+			do
+				x1 += TEXTW(script_buttons[i1].symbol);
+			while (ev->x >= x1 && ++i1 < LENGTH(script_buttons));
+
+			if (i1 < LENGTH(script_buttons) && ev->button == Button1)
+			{
+				spawn(&(Arg){.v = script_buttons[i1].command});
+			}
+		}
 		else
 			click = ClkWinTitle;
 	}
@@ -1001,11 +1015,20 @@ void drawbar(Monitor *m)
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, &scheme[SchemeNorm]);
 	drw_text(drw, x, 0, w, bh, m->ltsymbol, 0);
+
 	x += w;
+
+	for (i = 0; i < LENGTH(script_buttons); i++)
+	{
+		w = TEXTW(script_buttons[i].symbol);
+		drw_text(drw, x, 0, w, bh, script_buttons[i].symbol, urg & 1 << i);
+		x += w;
+	}
+
 	xx = x;
-	// if (m == selmon) { /* status is only drawn on selected monitor */
 	w = TEXTW(stext);
 	x = m->ww - w;
+
 	if (showsystray && m == systraytomon(m))
 	{
 		x -= getsystraywidth();
@@ -1015,9 +1038,9 @@ void drawbar(Monitor *m)
 		x = xx;
 		w = m->ww - xx;
 	}
+
 	drw_text(drw, x, 0, w, bh, stext, 0);
-	// } else
-	// 	x = m->ww;
+
 	if ((w = x - xx) > bh)
 	{
 		x = xx;
@@ -2081,6 +2104,11 @@ void setup(void)
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
 	focus(NULL);
+
+	for (int i = 0; i < LENGTH(script_buttons); i++)
+	{
+		sbw += TEXTW(script_buttons[i].symbol);
+	}
 }
 
 void showhide(Client *c)
