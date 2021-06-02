@@ -12,7 +12,8 @@
 static const char *fonts[] = {
 	"monospace:size=10",
 	"Terminus:size=10",
-	"FontAwesome:size=10"
+	"FontAwesome:size=10",
+	"Font Awesome 5 Pro:size=10",
 };
 static const char dmenufont[]       = "monospace:size=12";
 static const char normbordercolor[] = "#282c34"; // Цвет рамки неактивного окна
@@ -88,6 +89,7 @@ static const Rule rules[] = {
 	{ "Nautilus",       									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
 	{ "Nemo",           									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
 	{ "Postman",           									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
+	{ "Insomnia",           								NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
 	{ "Skype",           									NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
 	{ "Sqlectron",           								NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
 	{ "NoSQLBooster for MongoDB",   						NULL,       NULL,       				 1 << 3,       borderpx,             0,           0 },
@@ -218,7 +220,11 @@ static const char *slock[]	  	   = { "slock", NULL };
 static const char *wallpaper[]	  	   = { "wallpaper.sh", NULL };
 
 static const ScriptButton script_buttons[] = {
+	{ "|", 	NULL },
 	{ "",	wallpaper },
+	{ "|", 	NULL },
+	{ "",	shutdowncmd },
+	{ "",	rebootcmd },
 };
 
 // Биндинги
