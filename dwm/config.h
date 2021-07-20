@@ -60,6 +60,22 @@ static const Tag tags[] = {
 	{ "",		&layouts[0] }
 };
 
+static const Tag tags_2[] = {
+	{ "",		&layouts[7] },
+	{ "",		&layouts[3] }
+};
+
+static const Tag tags_3[] = {
+	{ "",		&layouts[7] },
+	{ "",		&layouts[3] }
+};
+
+static const Tags newTags[] = {
+	{ tags },
+	{ tags_2 },
+	{ tags_3 },
+};
+
 #include "funcions/shiftview.c" // Перемещение по тегам вперед/назад
 
 // Привязка окон к тегам и мониторам
@@ -196,12 +212,12 @@ static const char *gsfccmd[]       		 = { "gnome-screenshot", "-a", NULL };
 static const char *toggleTouchpad[]  = { "bash", HOME"/sh/toggleTouchPad.sh", NULL };
 
 // Change sound
-static const char *upVolume5pre[]      = { "amixer", "set", "Master", "5%+", NULL };
-static const char *upVolume2pre[]      = { "amixer", "set", "Master", "2%+", NULL };
-static const char *downVolume5pre[]    = { "amixer", "set", "Master", "5%-", NULL };
-static const char *downVolume2pre[]    = { "amixer", "set", "Master", "2%-", NULL };
+static const char *upVolume5pre[]      = { "pactl", "set-sink-volume", "alsa_output.pci-0000_00_1f.3.analog-stereo", "+10%", NULL };
+static const char *upVolume2pre[]      = { "pactl", "set-sink-volume", "alsa_output.pci-0000_00_1f.3.analog-stereo", "+5%", NULL };
+static const char *downVolume5pre[]    = { "pactl", "set-sink-volume", "alsa_output.pci-0000_00_1f.3.analog-stereo", "-10%", NULL };
+static const char *downVolume2pre[]    = { "pactl", "set-sink-volume", "alsa_output.pci-0000_00_1f.3.analog-stereo", "-5%", NULL };
 // static const char *toggleVolume[]  = { "amixer", "set", "Master", "toggle", NULL }; // for debian
-static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "set", "Master", "1+", "toggle", NULL }; // for ubuntu
+static const char *toggleVolume[]  = { "pactl", "set-sink-mute", "alsa_output.pci-0000_00_1f.3.analog-stereo", "toggle", NULL }; // for ubuntu
 // static const char *upVolume[]      = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL }; // for ubuntu
 // static const char *downVolume[]    = { "amixer", "-D", "pulse", "sset", "Master", "5%-", NULL }; // for ubuntu
 // static const char *toggleVolume[]  = { "amixer", "-D", "pulse", "sset", "Master", "toggle", NULL }; // for ubuntu
