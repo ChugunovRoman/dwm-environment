@@ -60,21 +60,21 @@ static const Tag tags[] = {
 	{ "",		&layouts[0] }
 };
 
-static const Tag tags_2[] = {
-	{ "",		&layouts[7] },
-	{ "",		&layouts[3] }
-};
+// static const Tag tags_2[] = {
+// 	{ "",		&layouts[7] },
+// 	{ "",		&layouts[3] }
+// };
 
-static const Tag tags_3[] = {
-	{ "",		&layouts[7] },
-	{ "",		&layouts[3] }
-};
+// static const Tag tags_3[] = {
+// 	{ "",		&layouts[7] },
+// 	{ "",		&layouts[3] }
+// };
 
-static const Tags newTags[] = {
-	{ tags },
-	{ tags_2 },
-	{ tags_3 },
-};
+// static const Tags newTags[] = {
+// 	{ tags },
+// 	{ tags_2 },
+// 	{ tags_3 },
+// };
 
 #include "funcions/shiftview.c" // Перемещение по тегам вперед/назад
 
