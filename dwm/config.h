@@ -177,7 +177,8 @@ static const char *dmenuScriptsCmd[]     = { "dmenu_xdotool", "-m", dmenumon, "-
 static const char *rofiSelectedToTabbedCmd[]     = { "rofi_select_to_tabbed.pl", NULL };
 static const char *rofiFocusedToTabbedCmd[]     = { "rofi_focused_to_tabbed.pl", NULL };
 
-static const char *termcmd[]       		 = { "gnome-terminal", "--hide-menubar", NULL };
+// static const char *termcmd[]       		 = { "gnome-terminal", "--hide-menubar", NULL };
+static const char *termcmd[]       		 = { "terminator", NULL };
 static const char *chromecmd[]     		 = { "chromium-browser", NULL };
 static const char *googlechromecmd[]     = { "google-chrome-stable", NULL };
 static const char *yandexcmd[]     		 = { "yandex-browser", NULL };
