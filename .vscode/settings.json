@@ -1,15 +1,20 @@
 {
     "files.associations": {
         "*.tpl": "html",
+        "*.svetle": "html",
         "*.mustache": "html",
         "*.js": "javascriptreact",
         "*.ts": "typescript",
         "*.toml": "properties",
         "*.service": "properties",
+        "*.prettierrc": "json",
+        "*.qc": "c",
+        "*.script": "lua",
         "xlib.h": "c",
         "xft.h": "c",
         "xkblib.h": "c",
-        "xinerama.h": "c"
+        "xinerama.h": "c",
+        "sstream": "c"
     },
     "[cpp]": {
         "editor.formatOnSave": false

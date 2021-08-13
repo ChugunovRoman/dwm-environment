@@ -158,7 +158,7 @@ struct Client
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
+	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isOnScratchPad;
 	Client *next;
 	Client *snext;
 	Monitor *mon;
@@ -344,6 +344,7 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 static void warp(const Client *c);
 static void showScratchPad();
+static Bool isScratchPadEmpty();
 
 /* variables */
 static Systray *systray = NULL;
@@ -402,6 +403,25 @@ struct NumTags
 	char limitexceeded[LENGTH(tags) > 31 ? -1 : 1];
 };
 
+Bool isScratchPadEmpty()
+{
+	Client *client;
+	unsigned int tag, scratchtag = 1 << LENGTH(tags);
+
+	tag = scratchPadVisibility ? selmon->tagset[selmon->seltags] : scratchtag;
+
+	for (client = nextfloatingtag(selmon->clients, tag); client; client = nextfloatingtag(client->next, tag))
+	{
+		if (client->isfullscreen > 0)
+			continue;
+
+		if(client->isOnScratchPad)
+			return False;
+	}
+
+	return True;
+}
+
 /* function implementations */
 void showScratchPad(const Arg *arg)
 {
@@ -418,6 +438,7 @@ void showScratchPad(const Arg *arg)
 			continue;
 
 		client->tags = tag;
+		client->isOnScratchPad = 1;
 
 		fprintf(stderr, "client, name: %s, isfloating: %d, isfullscreen: %d, oldstate: %d\n", client->name, client->isfloating, client->isfullscreen, client->oldstate);
 
@@ -1012,9 +1033,22 @@ void drawbar(Monitor *m)
 		drw_rect(drw, x + 1, 1, dx, dx, m == selmon && selmon->sel && selmon->sel->tags & 1 << i, occ & 1 << i, urg & 1 << i);
 		x += w;
 	}
-	w = blw = TEXTW(m->ltsymbol);
+
+	Bool isSPE = isScratchPadEmpty();
+	char *tagSymbol = malloc(18);
+	const char isScrachPadShowChar[] = "*";
+
+	strcpy(tagSymbol, m->ltsymbol);
+
+	if (scratchPadVisibility && isSPE)
+		showScratchPad(0);
+
+	if (scratchPadVisibility)
+		strcat(tagSymbol, isScrachPadShowChar);
+
+	w = blw = TEXTW(tagSymbol);
 	drw_setscheme(drw, &scheme[SchemeNorm]);
-	drw_text(drw, x, 0, w, bh, m->ltsymbol, 0);
+	drw_text(drw, x, 0, w, bh, tagSymbol, 0);
 
 	x += w;
 
