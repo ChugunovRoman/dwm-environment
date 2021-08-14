@@ -3,6 +3,7 @@
 dmenu/dmenu
 dwm/dwm
 slock/slock
+slstatus/slstatus
 **/*.o
 **/*.bin
 **/*.swp
